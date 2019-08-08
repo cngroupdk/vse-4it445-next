@@ -3,15 +3,15 @@ import React from 'react';
 import { Quack } from '../molecules/';
 import { TopNavigation } from '../organisms/TopNavigation';
 
-export function HomeTemplate() {
+export function HomeTemplate({ quacks, onLikePress }) {
   return (
     <>
       <TopNavigation />
-      <section className="pa3 pa5-ns bt b--black-10 black-70 bg-white">
-        <main class="mw6 center">
-          <Quack />
-          <Quack />
-          <Quack />
+      <section className="pa3 bt b--black-10">
+        <main className="mw6 center">
+          {quacks.map(quack => (
+            <Quack key={quack.id} quack={quack} onLikePress={onLikePress} />
+          ))}
         </main>
       </section>
     </>
