@@ -9,6 +9,7 @@ import { AboutPage } from './pages/AboutPage';
 import { SignInPage } from './pages/SignInPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { UserDetailPage } from './pages/UserDetailPage';
+import { QuackDetailPage } from './pages/QuackDetailPage';
 import { PageNotFound } from './pages/PageNotFound';
 
 function App() {
@@ -22,7 +23,11 @@ function App() {
             <Route path="/auth/signin" exact component={SignInPage} />
             <Route path="/auth/signup" exact component={SignUpPage} />
             <Route path="/:screenName" exact component={UserDetailPage} />
-            <Route path="/:screenName/status/:id" exact component={HomePage} />
+            <Route
+              path="/:screenName/status/:id"
+              exact
+              component={QuackDetailPage}
+            />
             <Route path="*" component={PageNotFound} />
           </Switch>
         </BrowserRouter>
