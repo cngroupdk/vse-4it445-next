@@ -1,49 +1,10 @@
 import React, { useState } from 'react';
 
 import { HomeTemplate } from '../templates/HomeTemplate';
+import { useFetcher } from '../utils/api';
 
 export function HomePage() {
-  const quacks = [
-    {
-      id: 1,
-      createdAt: '2019-08-08T14:13:18.023Z',
-      user: {
-        id: 1,
-        name: 'Young Gatchell',
-        screenName: 'yg123',
-        profileImageUrl: 'http://mrmrs.github.io/photos/p/1.jpg',
-      },
-      text: 'Hello, People of the World!',
-      likeCount: 399,
-      liked: true,
-    },
-    {
-      id: 2,
-      createdAt: '2019-08-06T14:13:18.023Z',
-      user: {
-        id: 2,
-        name: 'Gatchell Young ',
-        screenName: 'gyoung',
-        profileImageUrl: 'http://mrmrs.github.io/photos/p/2.jpg',
-      },
-      text: 'Como setas?',
-      likeCount: 2,
-      liked: false,
-    },
-    {
-      id: 3,
-      createdAt: '2019-08-03T14:13:18.023Z',
-      user: {
-        id: 1,
-        name: 'Young Gatchell',
-        screenName: 'yg123',
-        profileImageUrl: 'http://mrmrs.github.io/photos/p/1.jpg',
-      },
-      text: 'Hello,\n\nWorld!',
-      likeCount: 0,
-      liked: false,
-    },
-  ];
+  const quacksFetcher = useFetcher('/api/timeline');
 
   const onLikePress = quack => {
     console.log('like:', quack);
@@ -63,7 +24,7 @@ export function HomePage() {
 
   return (
     <HomeTemplate
-      quacks={quacks}
+      quacksFetcher={quacksFetcher}
       onLikePress={onLikePress}
       quackFormState={quackFormState}
     />

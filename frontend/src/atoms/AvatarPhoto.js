@@ -1,5 +1,12 @@
 import React from 'react';
+import classNames from 'classnames';
 
-export function AvatarPhoto({ src, alt }) {
-  return <img src={src} alt={alt} className="ba b--black-10 db br2 w3 h3" />;
+export function AvatarPhoto({ src, alt, size = '3' }) {
+  return (
+    <img
+      src={src}
+      alt={alt}
+      className={classNames('ba b--black-10 db br2', `w${size}`, `h${size}`)}
+    />
+  );
 }

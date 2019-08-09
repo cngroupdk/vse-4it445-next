@@ -4,7 +4,10 @@ import classNames from 'classnames';
 export function TransparentButton({ children, className, ...rest }) {
   return (
     <button
-      className={classNames('button-reset bn dim pointer pa2', className)}
+      className={classNames(
+        'f6 black-60 button-reset bn dim pointer pa2',
+        className,
+      )}
       type="button"
       {...rest}
     >

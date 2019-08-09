@@ -1,14 +1,14 @@
 import React from 'react';
 
-import { TopNavigation } from '../organisms/TopNavigation';
+import { Link } from '../atoms/';
+import { Placeholder } from '../templates/Placeholder';
 
 export function PageNotFound() {
   return (
-    <div>
-      <TopNavigation />
-      <section className="mw6 center">
-        <h1>Error 404: Page Not Found</h1>
-      </section>
-    </div>
+    <Placeholder title="Error 404">
+      <p>
+        Page not found, please return to <Link to="/">Home</Link>.
+      </p>
+    </Placeholder>
   );
 }

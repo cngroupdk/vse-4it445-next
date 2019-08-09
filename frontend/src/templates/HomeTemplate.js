@@ -1,9 +1,13 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { Quack, QuackForm } from '../molecules/';
+import { TransparentButton } from '../atoms/';
+import { QuackForm } from '../molecules/';
+import { QuackList } from '../organisms/QuackList';
 import { TopNavigation } from '../organisms/TopNavigation';
 
-export function HomeTemplate({ quacks, onLikePress, quackFormState }) {
+export function HomeTemplate({ quacksFetcher, onLikePress, quackFormState }) {
   return (
     <>
       <TopNavigation />
@@ -13,10 +17,26 @@ export function HomeTemplate({ quacks, onLikePress, quackFormState }) {
             <h1>Home</h1>
           </header>
           <QuackForm {...quackFormState} />
+
+          {quacksFetcher.data && (
+            <TransparentButton
+              className="fr"
+              onClick={() => quacksFetcher.refetch()}
+            >
+              <FontAwesomeIcon
+                icon={faSyncAlt}
+                spin={quacksFetcher.isLoading}
+              />{' '}
+              Refresh
+            </TransparentButton>
+          )}
           <main>
-            {quacks.map(quack => (
-              <Quack key={quack.id} quack={quack} onLikePress={onLikePress} />
-            ))}
+            <QuackList
+              quacks={quacksFetcher.data && quacksFetcher.data.quacks}
+              isLoading={quacksFetcher.isLoading}
+              error={quacksFetcher.error}
+              onLikePress={onLikePress}
+            />
           </main>
         </section>
       </div>

@@ -1,6 +1,8 @@
 export { AvatarPhoto } from './AvatarPhoto';
 export { Button } from './Button';
+export { ErrorMessage } from './ErrorMessage';
 export { Link } from './Link';
+export { Loading } from './Loading';
 export { TextArea } from './TextArea';
 export { TransparentButton } from './TransparentButton';
 export { UserName } from './UserName';
