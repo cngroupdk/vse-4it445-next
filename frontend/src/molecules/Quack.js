@@ -1,19 +1,24 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
+import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 
 import {
   AvatarPhoto,
-  UserName,
-  UserScreenName,
   Link,
   TransparentButton,
+  UserName,
+  UserScreenName,
 } from '../atoms/';
+import { formatDate } from '../utils/date';
 
 export function Quack({ quack, onLikePress }) {
   const {
     user: { name, screenName, profileImageUrl },
     text,
+    likeCount,
+    liked,
+    createdAt,
   } = quack;
 
   return (
@@ -30,10 +35,10 @@ export function Quack({ quack, onLikePress }) {
           </Link>
           {' - '}
           <Link href="#0" className="black-60">
-            <span className="f6 fw4 black-60">May 13</span>
+            <span className="f6 fw4 black-60">{formatDate(createdAt)}</span>
           </Link>
         </div>
-        <div className="black-90">{text}</div>
+        <div className="black-90 pre-line">{text}</div>
         <div className="pt2">
           <TransparentButton
             className="f6 black-60 mr2"
@@ -42,7 +47,11 @@ export function Quack({ quack, onLikePress }) {
               onLikePress(quack);
             }}
           >
-            <FontAwesomeIcon icon={faHeart} /> Like
+            <FontAwesomeIcon
+              icon={liked ? faHeartSolid : faHeartRegular}
+              className="mr1"
+            />{' '}
+            {likeCount}
           </TransparentButton>
         </div>
       </div>
