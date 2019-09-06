@@ -1,10 +1,22 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
+import classNames from 'classnames';
 
-import { Link } from '../atoms/';
+import { AvatarPhoto, Link } from '../atoms/';
+import { useAuth } from '../utils/auth';
 
 import logo from './img/logo.svg';
 
-export function TopNavigation() {
+const navLinkTextStyle = 'f6 dib white';
+const navLinkStyle = classNames(navLinkTextStyle, 'dim');
+const navButtonStyle = classNames(
+  navLinkTextStyle,
+  'bg-transparent bg-animate hover-bg-white hover-black pv2 ph3 mh3 br-pill ba b--white-20',
+);
+
+function TopNavigationBase({ history }) {
+  const { user, signout } = useAuth();
+
   return (
     <nav className="flex justify-between bb b--white-10 bg-dark-green white">
       <Link noUnderline className="b white flex items-center pa2" to="/">
@@ -12,19 +24,53 @@ export function TopNavigation() {
         Quacker
       </Link>
       <div className="flex-grow flex items-center">
-        <Link to="/about" className="f6 dib white dim pa3 mr1 mr2-ns">
+        <Link to="/about" className={classNames(navLinkStyle, 'pa3')}>
           About
         </Link>
-        <Link to="/auth/signin" className="f6 dib white dim pa3 mr1 mr2-ns">
-          Sign In
-        </Link>
-        <Link
-          to="/auth/signup"
-          className="f6 dib white bg-animate hover-bg-white hover-black no-underline pv2 ph4 mr1 mr2-ns br-pill ba b--white-20"
-        >
-          Sign Up
-        </Link>
+        {user ? (
+          <>
+            <Link to="/settings" className={classNames(navLinkStyle, 'pa3')}>
+              Settings
+            </Link>
+            <Link
+              to={`/${user.screenName}`}
+              noUnderline
+              className={classNames(
+                navLinkStyle,
+                'ph3 pv1 h-100 flex items-center',
+              )}
+            >
+              <AvatarPhoto
+                className="v-mid dib mr2"
+                src={user.profileImageUrl}
+                alt={user.screenName}
+                size={2}
+              />{' '}
+              {user.name}
+            </Link>
+            <button
+              className={navButtonStyle}
+              onClick={() => {
+                signout();
+                history.push('/');
+              }}
+            >
+              Sign Out
+            </button>
+          </>
+        ) : (
+          <>
+            <Link to="/auth/signin" className={classNames(navLinkStyle, 'pa3')}>
+              Sign In
+            </Link>
+            <Link to="/auth/signup" noUnderline className={navButtonStyle}>
+              Sign Up
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
 }
+
+export const TopNavigation = withRouter(TopNavigationBase);

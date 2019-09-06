@@ -2,10 +2,17 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "prettier": "prettier --write \"src/**/*.js\" README.md"
+  },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "1.2.21",
-    "@fortawesome/free-regular-svg-icons": "5.10.1",
-    "@fortawesome/free-solid-svg-icons": "5.10.1",
+    "@fortawesome/fontawesome-svg-core": "1.2.22",
+    "@fortawesome/free-regular-svg-icons": "5.10.2",
+    "@fortawesome/free-solid-svg-icons": "5.10.2",
     "@fortawesome/react-fontawesome": "0.1.4",
     "axios": "0.19.0",
     "classnames": "2.2.6",
@@ -13,14 +20,11 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "5.0.1",
-    "react-scripts": "3.0.1",
+    "react-scripts": "3.1.1",
     "tachyons": "4.11.1"
   },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+  "devDependencies": {
+    "prettier": "1.18.2"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,8 +40,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "prettier": "1.18.2"
   }
 }
