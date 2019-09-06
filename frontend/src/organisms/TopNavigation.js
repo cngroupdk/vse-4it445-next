@@ -1,11 +1,11 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 import { withRouter } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { AvatarPhoto, Link } from '../atoms/';
 import { useAuth } from '../utils/auth';
-
-import logo from './img/logo.svg';
 
 const navLinkTextStyle = 'f6 dib white';
 const navLinkStyle = classNames(navLinkTextStyle, 'dim');
@@ -19,8 +19,8 @@ function TopNavigationBase({ history }) {
 
   return (
     <nav className="flex justify-between bb b--white-10 bg-dark-green white">
-      <Link noUnderline className="b white flex items-center pa2" to="/">
-        <img src={logo} className="dib h2 w2" alt="Logo" />
+      <Link to="/" noUnderline className="b white flex items-center pv2 ph3">
+        <FontAwesomeIcon icon={faFeatherAlt} className="mr2 f4" />
         Quacker
       </Link>
       <div className="flex-grow flex items-center">
