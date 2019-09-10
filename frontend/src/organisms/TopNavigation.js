@@ -24,6 +24,9 @@ function TopNavigationBase({ history }) {
         Quacker
       </Link>
       <div className="flex-grow flex items-center">
+        <Link to="/" className={classNames(navLinkStyle, 'pa3')}>
+          Home
+        </Link>
         <Link to="/about" className={classNames(navLinkStyle, 'pa3')}>
           About
         </Link>

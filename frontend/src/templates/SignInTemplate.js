@@ -1,9 +1,10 @@
 import React from 'react';
 
-import { Button } from '../atoms/';
+import { Link } from '../atoms/';
 import { TopNavigation } from '../organisms/TopNavigation';
+import { SignInForm } from '../organisms/SignInForm';
 
-export function SignInTemplate({ onSubmit }) {
+export function SignInTemplate({ formal }) {
   return (
     <>
       <TopNavigation />
@@ -13,7 +14,16 @@ export function SignInTemplate({ onSubmit }) {
             <h1>Sign In</h1>
           </header>
           <main>
-            <Button onClick={onSubmit}>Sign In</Button>
+            <SignInForm formal={formal}>
+              <div className="lh-copy">
+                <Link className="db f5 dark-green" to="/auth/signup">
+                  Sign Up
+                </Link>
+                <Link className="db f5 dark-green" to="/auth/password-reset">
+                  Forgot your password?
+                </Link>
+              </div>
+            </SignInForm>
           </main>
         </section>
       </div>

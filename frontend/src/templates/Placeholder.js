@@ -4,16 +4,18 @@ import { TopNavigation } from '../organisms/TopNavigation';
 
 export function Placeholder({ title, children }) {
   return (
-    <div>
+    <>
       <TopNavigation />
-      <section className="mw6 center">
-        <h1>{title}</h1>
-        {typeof children === 'undefined' ? (
-          <p>This page is empty for now...</p>
-        ) : (
-          children
-        )}
-      </section>
-    </div>
+      <div className="pa3 bt b--black-10">
+        <section className="mw6 center">
+          <h1>{title}</h1>
+          {typeof children === 'undefined' ? (
+            <p>This page is empty for now...</p>
+          ) : (
+            children
+          )}
+        </section>
+      </div>
+    </>
   );
 }
