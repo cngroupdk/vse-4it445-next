@@ -13,11 +13,15 @@ import { QuackList } from '../organisms/QuackList';
 import { TopNavigation } from '../organisms/TopNavigation';
 
 export function UserDetailTemplate({
+  screenName,
   userFetcher,
   onLikePress,
   quackFormState,
+  currentUser,
 }) {
   const { data, isLoading, error, refetch } = userFetcher;
+  const showQuackForm =
+    quackFormState && currentUser && currentUser.screenName === screenName;
 
   return (
     <>
@@ -37,7 +41,7 @@ export function UserDetailTemplate({
                 <h1 className="f3 mb2">{data.user.name}</h1>
                 <h2 className="f5 fw4 gray mt0">@{data.user.screenName}</h2>
               </header>
-              {quackFormState && <QuackForm {...quackFormState} />}
+              {showQuackForm && <QuackForm {...quackFormState} />}
               <TransparentButton className="fr" onClick={() => refetch()}>
                 <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} /> Refresh
               </TransparentButton>

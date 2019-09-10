@@ -3,7 +3,7 @@ import classNames from 'classnames';
 
 import { Button, TextArea } from '../atoms/';
 
-export function QuackForm({ text, setText, onSubmit, maxLength = 25 }) {
+export function QuackForm({ text, setText, onSubmit, maxLength = 250 }) {
   const length = !text ? 0 : text.length;
   const isLengthValid = length <= maxLength;
   return (

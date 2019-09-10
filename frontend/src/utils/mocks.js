@@ -16,7 +16,7 @@ export const users = [
 export const quacks = [
   {
     id: 1,
-    createdAt: '2019-08-08T14:13:18.023Z',
+    createdAt: '2019-08-08T05:43:18.023Z',
     userId: 1,
     text: 'Hello, People of the World!',
     likeCount: 399,
@@ -24,7 +24,7 @@ export const quacks = [
   },
   {
     id: 2,
-    createdAt: '2019-08-06T14:13:18.023Z',
+    createdAt: '2019-08-06T14:10:51.023Z',
     userId: 2,
     text: 'Como setas?',
     likeCount: 2,
@@ -32,7 +32,7 @@ export const quacks = [
   },
   {
     id: 3,
-    createdAt: '2019-08-03T14:13:18.023Z',
+    createdAt: '2019-08-03T09:09:34.023Z',
     userId: 1,
     text: 'Hello,\n\nWorld!',
     likeCount: 0,

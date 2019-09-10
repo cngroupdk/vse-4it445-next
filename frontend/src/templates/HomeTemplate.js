@@ -7,7 +7,12 @@ import { QuackForm } from '../molecules/';
 import { QuackList } from '../organisms/QuackList';
 import { TopNavigation } from '../organisms/TopNavigation';
 
-export function HomeTemplate({ quacksFetcher, onLikePress, quackFormState }) {
+export function HomeTemplate({
+  quacksFetcher,
+  onLikePress,
+  quackFormState,
+  currentUser,
+}) {
   return (
     <>
       <TopNavigation />
@@ -16,7 +21,7 @@ export function HomeTemplate({ quacksFetcher, onLikePress, quackFormState }) {
           <header>
             <h1>Home</h1>
           </header>
-          <QuackForm {...quackFormState} />
+          {currentUser && <QuackForm {...quackFormState} />}
 
           {quacksFetcher.data && (
             <TransparentButton

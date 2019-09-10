@@ -2,8 +2,10 @@ import React, { useState } from 'react';
 
 import { HomeTemplate } from '../templates/HomeTemplate';
 import { useFetcher } from '../utils/api';
+import { useAuth } from '../utils/auth';
 
 export function HomePage() {
+  const { user } = useAuth();
   const quacksFetcher = useFetcher('/api/timeline');
 
   const onLikePress = quack => {
@@ -27,6 +29,7 @@ export function HomePage() {
       quacksFetcher={quacksFetcher}
       onLikePress={onLikePress}
       quackFormState={quackFormState}
+      currentUser={user}
     />
   );
 }

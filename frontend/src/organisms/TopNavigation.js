@@ -53,6 +53,7 @@ function TopNavigationBase({ history }) {
               onClick={() => {
                 signout();
                 history.push('/');
+                window.location.reload();
               }}
             >
               Sign Out
