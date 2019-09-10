@@ -6,7 +6,7 @@ import { useAuth } from '../utils/auth';
 
 export function HomePage() {
   const { user } = useAuth();
-  const quacksFetcher = useFetcher('/api/timeline');
+  const quacksFetcher = useFetcher('/v1/timeline');
 
   const onLikePress = quack => {
     console.log('like:', quack);
