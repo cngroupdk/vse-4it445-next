@@ -41,6 +41,7 @@ export function HomeTemplate({
               isLoading={quacksFetcher.isLoading}
               error={quacksFetcher.error}
               onLikePress={onLikePress}
+              refetch={() => quacksFetcher.refetch()}
             />
           </main>
         </section>

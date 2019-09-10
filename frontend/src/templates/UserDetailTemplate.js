@@ -4,7 +4,8 @@ import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 import {
   AvatarPhoto,
-  ErrorMessage,
+  Button,
+  ErrorBanner,
   Loading,
   TransparentButton,
 } from '../atoms/';
@@ -29,7 +30,13 @@ export function UserDetailTemplate({
       <div className="pa3 bt b--black-10">
         <section className="mw6 center">
           {isLoading && !data && <Loading />}
-          {error && <ErrorMessage>{error.message}</ErrorMessage>}
+          {error && (
+            <ErrorBanner title={error.message}>
+              <Button color="red" onClick={() => refetch()}>
+                Reload
+              </Button>
+            </ErrorBanner>
+          )}
           {data && (
             <>
               <header>

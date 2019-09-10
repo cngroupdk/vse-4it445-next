@@ -1,13 +1,19 @@
 import React from 'react';
 
-import { ErrorMessage, Loading } from '../atoms/';
+import { Button, ErrorBanner, Loading } from '../atoms/';
 import { Quack } from '../molecules/';
 
-export function QuackList({ quacks, isLoading, error, onLikePress }) {
+export function QuackList({ quacks, isLoading, error, onLikePress, refetch }) {
   return (
     <>
       {isLoading && !quacks && <Loading />}
-      {error && <ErrorMessage>{error.message || 'Unknown error'}</ErrorMessage>}
+      {error && (
+        <ErrorBanner title={error.message || 'Unknown error'}>
+          <Button color="red" onClick={refetch}>
+            Reload
+          </Button>
+        </ErrorBanner>
+      )}
       {quacks &&
         quacks.map(quack => (
           <Quack key={quack.id} quack={quack} onLikePress={onLikePress} />

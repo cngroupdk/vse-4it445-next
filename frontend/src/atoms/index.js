@@ -1,5 +1,6 @@
 export { AvatarPhoto } from './AvatarPhoto';
 export { Button } from './Button';
+export { ErrorBanner } from './ErrorBanner';
 export { ErrorMessage } from './ErrorMessage';
 export { Label } from './Label';
 export { Link } from './Link';
