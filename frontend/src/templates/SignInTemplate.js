@@ -4,7 +4,7 @@ import { Link } from '../atoms/';
 import { TopNavigation } from '../organisms/TopNavigation';
 import { SignInForm } from '../organisms/SignInForm';
 
-export function SignInTemplate({ formal }) {
+export function SignInTemplate({ formal, isLoading, error }) {
   return (
     <>
       <TopNavigation />
@@ -14,7 +14,7 @@ export function SignInTemplate({ formal }) {
             <h1>Sign In</h1>
           </header>
           <main>
-            <SignInForm formal={formal}>
+            <SignInForm formal={formal} isLoading={isLoading} error={error}>
               <div className="lh-copy">
                 <Link className="db f5 dark-green" to="/auth/signup">
                   Sign Up

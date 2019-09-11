@@ -1,5 +1,14 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import axios from 'axios';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+  useRef,
+} from 'react';
+import axios, { CancelToken } from 'axios';
+
+import { useAuth } from './auth';
 
 const LOG = true;
 const API_MOCK_ENABLED = true;
@@ -8,74 +17,139 @@ const api = axios.create({
   baseURL: '/api',
 });
 
+const log = LOG ? console.info : () => {};
+
 if (API_MOCK_ENABLED) {
   const { installApiMocks } = require('./api-mock.js');
   installApiMocks(api);
 }
 
-const initialState = { api };
-
-const ApiStateContext = createContext(initialState);
-const ApiDispatchContext = createContext(() =>
-  console.warn('Warning: ApiDispatchContext is not provided!'),
-);
+const ApiStateContext = createContext(api);
 
 export function ApiProvider({ children }) {
-  const [state, setState] = useState(initialState);
+  const { token } = useAuth();
+
+  // Using `useLayoutEffect` instead of `useEffect` because it is triggered
+  // earlier then other `useEffect` calls that may already use `api`.
+  useLayoutEffect(() => {
+    if (!token) {
+      delete api.defaults.headers.common['Authorization'];
+    } else {
+      api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+    }
+  }, [token]);
 
   return (
-    <ApiDispatchContext.Provider value={setState}>
-      <ApiStateContext.Provider value={state}>
-        {children}
-      </ApiStateContext.Provider>
-    </ApiDispatchContext.Provider>
+    <ApiStateContext.Provider value={api}>{children}</ApiStateContext.Provider>
   );
 }
 
-export function useFetcher(url, options) {
-  const api = useApi();
+export function useFetcher(url, { autoStart = false, ...options } = {}) {
+  const fetchRequest = useRequest(autoStart ? { isLoading: true } : {});
 
-  const log = LOG ? console.info : () => {};
+  const refetch = () => {
+    fetchRequest.request(url, options);
+  };
+
+  useEffect(() => {
+    if (autoStart) {
+      refetch();
+    }
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+  return {
+    ...fetchRequest,
+    refetch,
+  };
+}
+
+export function useRequest(initialState = {}) {
+  const api = useApi();
+  const apiRef = useRef(api);
+  const stateRef = useRef(null);
+
+  useEffect(() => {
+    apiRef.current = api;
+  }, [api]);
 
   const [state, setState] = useState({
-    isLoading: true,
+    isLoading: false,
     error: null,
     data: null,
-    refetch: () => {
-      log('[api.get] start', url);
+    cancelSource: null,
+    ...initialState,
+    request: (url, { method = 'GET', onSuccess, ...options } = {}) => {
+      log(`[api.${method}] start`, url);
 
-      setState(oldState => ({ ...oldState, isLoading: true }));
+      if (stateRef.current) {
+        const { cancelSource: previousCancelSource } = stateRef.current;
+        if (previousCancelSource) {
+          previousCancelSource.cancel('Request canceled.');
+        }
+      }
 
-      api
-        .get(url, options)
-        .then(({ data }) => {
-          log('[api.get] success', url, data);
+      const cancelSource = CancelToken.source();
+
+      setState(oldState => ({ ...oldState, isLoading: true, cancelSource }));
+
+      apiRef.current
+        .request({
+          url,
+          method,
+          cancelToken: cancelSource.token,
+          ...options,
+        })
+        .then(response => {
+          const { data } = response;
+          log(`[api.${method}] success`, url, data);
 
           setState(oldState => ({
             ...oldState,
             isLoading: false,
             error: null,
+            cancelSource: null,
             data,
           }));
+
+          if (onSuccess) {
+            onSuccess(response);
+          }
         })
         .catch(error => {
-          log('[api.get] error', url, error);
+          if (cancelSource && cancelSource.token && cancelSource.token.reason) {
+            log(`[api.${method}] canceled`, url);
+            return;
+          }
+
+          log(`[api.${method}] error`, url, error);
 
           setState(oldState => ({
             ...oldState,
             isLoading: false,
-            error,
+            cancelSource: null,
+            error: `${error}`,
           }));
         });
     },
   });
 
-  useEffect(state.refetch, []);
+  useEffect(() => {
+    stateRef.current = state;
+  }, [state]);
+
+  useEffect(() => {
+    return () => {
+      if (stateRef.current && stateRef.current.cancelSource) {
+        stateRef.current.cancelSource.cancel(
+          'Caneling pending request on component unmount.',
+        );
+      }
+    };
+  }, []);
 
   return state;
 }
 
-function useApi() {
-  const { api } = useContext(ApiStateContext);
-  return api;
+export function useApi() {
+  return useContext(ApiStateContext);
 }

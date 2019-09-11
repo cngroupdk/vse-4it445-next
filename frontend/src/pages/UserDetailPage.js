@@ -6,7 +6,7 @@ import { useAuth } from '../utils/auth';
 
 function UserDetailPageBase({ screenName }) {
   const { user } = useAuth();
-  const userFetcher = useFetcher(`/v1/user/${screenName}`);
+  const userFetcher = useFetcher(`/v1/user/${screenName}`, { autoStart: true });
 
   const onLikePress = quack => {
     console.log('like:', quack);
