@@ -1,7 +1,7 @@
 import MockAdapter from 'axios-mock-adapter';
 import { mocks } from './mocks';
 
-const MOCK_API_DELAY = 1500;
+const MOCK_API_DELAY = 500;
 
 export function installApiMocks(api) {
   const mockAdapter = new MockAdapter(api, { delayResponse: MOCK_API_DELAY });
