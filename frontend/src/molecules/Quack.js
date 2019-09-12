@@ -32,7 +32,7 @@ export function Quack({ quack, onLikePress }) {
           <AvatarPhoto src={profileImageUrl} alt="#0" />
         </Link>
       </div>
-      <div className="pl3">
+      <div className="pl3 flex-auto">
         <div className="pb2">
           <Link to={linkToUser} className="black-90">
             <UserName name={name} /> <UserScreenName screenName={screenName} />

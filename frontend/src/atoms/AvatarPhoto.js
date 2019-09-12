@@ -8,6 +8,7 @@ export function AvatarPhoto({ src, alt, size = '3', className }) {
       alt={alt}
       className={classNames(
         'ba b--black-10 db br2',
+        `mw${size}`,
         `w${size}`,
         `h${size}`,
         className,
