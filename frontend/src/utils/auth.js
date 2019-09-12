@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useMemo, useState } from 'react';
+import React, {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react';
+
+const LOCAL_STORAGE_AUTH_KEY = 'quacker-auth';
 
 const initialState = {
   token: null,
@@ -19,12 +27,12 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
-  const [state, setState] = useState(initialState);
+  const [state, setState] = usePersistedAuth(initialState);
 
   const contextValue = useMemo(() => {
     const { token, user } = state;
     return createContextValue({ token, user, setState });
-  }, [state]);
+  }, [state, setState]);
 
   return (
     <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
@@ -38,4 +46,44 @@ function createContextValue({ token, user, setState }) {
     signin: ({ token, user }) => setState({ token, user }),
     signout: () => setState({ token: null, user: null }),
   };
+}
+
+function usePersistedAuth(defaultState) {
+  const [state, setStateRaw] = useState(() => getStorageState(defaultState));
+
+  const setState = useCallback(newState => {
+    setStateRaw(newState);
+    setStorageState(newState);
+  }, []);
+
+  return [state, setState];
+}
+
+function getStorageState(defaultState) {
+  if (!window.localStorage) {
+    return defaultState;
+  }
+
+  const rawData = window.localStorage.getItem(LOCAL_STORAGE_AUTH_KEY);
+  if (!rawData) {
+    return defaultState;
+  }
+
+  try {
+    const { user, token } = JSON.parse(rawData);
+
+    if (token && user && user.screenName && user.id && user.name) {
+      return { token, user };
+    }
+  } catch {}
+
+  return defaultState;
+}
+
+function setStorageState(newState) {
+  if (!window.localStorage) {
+    return;
+  }
+
+  window.localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, JSON.stringify(newState));
 }
