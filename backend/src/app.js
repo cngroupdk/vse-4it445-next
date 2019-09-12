@@ -2,18 +2,20 @@ import bodyParser from 'body-parser';
 import express from 'express';
 import cors from 'cors';
 
-// import rootRoutes from './rootRoutes';
+import { addDbToRequest, terminateDbConnection } from './libs/connection';
+
+import rootRoutes from './modules/rootRoutes';
 
 export const app = express();
 
 app.use(bodyParser.json());
 app.use(cors());
 
-// app.use(rootRoutes);
+app.use(addDbToRequest);
 
-app.use('/', (req, res, next) => {
-  res.send('Base of app na druhou');
-});
+app.use(rootRoutes);
+
+app.use(terminateDbConnection);
 
 app.use((req, res, next) => {
   res.status(404);
