@@ -4,19 +4,20 @@ import * as yup from 'yup';
 import { withRouter } from 'react-router-dom';
 
 import { SignInTemplate } from '../templates/SignInTemplate';
+import { useRequest } from '../utils/api';
 import { useAuth } from '../utils/auth';
-import { users as mockUsers } from '../utils/mocks';
 
 const initialValues = {
-  username: '',
+  email: '',
   password: '',
 };
 
 const schema = yup.object().shape({
-  username: yup
+  email: yup
     .string()
+    .email()
     .required()
-    .label('Email or username'),
+    .label('Email'),
   password: yup
     .string()
     .required()
@@ -24,23 +25,36 @@ const schema = yup.object().shape({
 });
 
 function SignInPageBase({ history }) {
-  const { signin } = useAuth();
+  const auth = useAuth();
+  const signinRequest = useRequest();
+
   const formal = useFormal(initialValues, {
     schema,
-    onSubmit: values => {
-      console.log('Your values are:', values);
-      const user = mockUsers[0];
+    onSubmit: ({ email, password }) => {
+      signinRequest.request('/v1/auth/signin', {
+        method: 'POST',
+        data: { email, password },
+        onSuccess: ({ data }) => {
+          const { token, user } = data;
 
-      signin({
-        token: 'fake-token',
-        user,
+          auth.signin({
+            token,
+            user,
+          });
+
+          history.replace('/');
+        },
       });
-
-      history.replace('/');
     },
   });
 
-  return <SignInTemplate formal={formal} />;
+  return (
+    <SignInTemplate
+      formal={formal}
+      isLoading={signinRequest.isLoading}
+      error={signinRequest.error}
+    />
+  );
 }
 
 export const SignInPage = withRouter(SignInPageBase);

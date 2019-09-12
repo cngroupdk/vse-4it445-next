@@ -1,19 +1,23 @@
 import React from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { Button } from '../atoms/';
+import { Button, ErrorBanner } from '../atoms/';
 import { Field } from '../molecules/';
 
-export function SignInForm({ formal, children }) {
+export function SignInForm({ formal, isLoading, error, children }) {
   return (
     <form {...formal.getFormProps()}>
+      {error && <ErrorBanner title={error} className="mb3" />}
       <Field
-        label="Email or username"
+        label="Email"
+        type="email"
         placeholder="e.g. john@doe.com"
         autoFocus="autofocus"
         autoComplete="on"
         autoCorrect="off"
         autoCapitalize="off"
-        {...formal.getFieldProps('username')}
+        {...formal.getFieldProps('email')}
       />
       <Field
         label="Password"
@@ -25,6 +29,9 @@ export function SignInForm({ formal, children }) {
       />
       <Button type="submit" className="mt2 mb3">
         Sign In
+        {isLoading && (
+          <FontAwesomeIcon className="ml3" icon={faFeatherAlt} spin />
+        )}
       </Button>
       {children}
     </form>
