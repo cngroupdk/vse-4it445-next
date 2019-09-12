@@ -15,7 +15,7 @@ export function ErrorBanner({ className, title, children, ...props }) {
         })}
       >
         <FontAwesomeIcon icon={faExclamationTriangle} />
-        <span className="lh-title ml3">{title}</span>
+        <span className="lh-title ml3">{title || 'Unknown error'}</span>
       </div>
       <div className="flex items-center justify-center">{children}</div>
     </div>

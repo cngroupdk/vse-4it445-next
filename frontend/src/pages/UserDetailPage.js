@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 
 import { UserDetailTemplate } from '../templates/UserDetailTemplate';
-import { useFetcher } from '../utils/api';
+import { PageNotFound } from './PageNotFound';
 import { useAuth } from '../utils/auth';
+import { useFetchRequest } from '../utils/request';
 
 function UserDetailPageBase({ screenName }) {
   const { user } = useAuth();
-  const userFetcher = useFetcher(`/v1/user/${screenName}`, { autoStart: true });
+  const userFetcher = useFetchRequest(`/v1/user/${screenName}`, {
+    autoStart: true,
+  });
 
   const onLikePress = quack => {
     console.log('like:', quack);
@@ -23,6 +26,11 @@ function UserDetailPageBase({ screenName }) {
     setText: setQuackFormText,
     onSubmit: submitQuack,
   };
+
+  const { error } = userFetcher;
+  if (error && error.response && error.response.status === 404) {
+    return <PageNotFound />;
+  }
 
   return (
     <UserDetailTemplate

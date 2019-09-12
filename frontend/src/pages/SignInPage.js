@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { withRouter } from 'react-router-dom';
 
 import { SignInTemplate } from '../templates/SignInTemplate';
-import { useRequest } from '../utils/api';
+import { useRequest } from '../utils/request';
 import { useAuth } from '../utils/auth';
 
 const initialValues = {

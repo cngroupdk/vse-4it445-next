@@ -5,10 +5,10 @@ import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 import { Button, ErrorBanner } from '../atoms/';
 import { Field } from '../molecules/';
 
-export function SignInForm({ formal, isLoading, error, children }) {
+export function SignInForm({ formal, isLoading, errorMessage, children }) {
   return (
     <form {...formal.getFormProps()}>
-      {error && <ErrorBanner title={error} className="mb3" />}
+      {errorMessage && <ErrorBanner title={errorMessage} className="mb3" />}
       <Field
         label="Email"
         type="email"

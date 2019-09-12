@@ -14,7 +14,11 @@ export function SignInTemplate({ formal, isLoading, error }) {
             <h1>Sign In</h1>
           </header>
           <main>
-            <SignInForm formal={formal} isLoading={isLoading} error={error}>
+            <SignInForm
+              formal={formal}
+              isLoading={isLoading}
+              errorMessage={error && error.message}
+            >
               <div className="lh-copy">
                 <Link className="db f5 dark-green" to="/auth/signup">
                   Sign Up

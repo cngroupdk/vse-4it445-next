@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 
 import { HomeTemplate } from '../templates/HomeTemplate';
-import { useFetcher } from '../utils/api';
+import { useFetchRequest } from '../utils/request';
 import { useAuth } from '../utils/auth';
 
 export function HomePage() {
   const { user } = useAuth();
-  const quacksFetcher = useFetcher('/v1/timeline', { autoStart: true });
+  const quacksFetcher = useFetchRequest('/v1/timeline', { autoStart: true });
 
   const onLikePress = quack => {
     console.log('like:', quack);
