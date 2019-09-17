@@ -34,7 +34,8 @@ export const quacks = [
     id: 3,
     createdAt: '2019-08-03T09:09:34.023Z',
     userId: 1,
-    text: 'Hello,\n\nWorld!',
+    text:
+      'Hello, People of the World! Hello, People of the World! Hello, People of the World! Hello, People of the World! Hello,\n\nWorld!',
     likeCount: 0,
     liked: false,
   },

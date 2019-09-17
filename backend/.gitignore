@@ -5,6 +5,7 @@ npm-debug.log
 
 # custom
 /.env
+/.env.local
 
 /log/*
 !/log/.gitkeep

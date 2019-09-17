@@ -29,7 +29,7 @@ export function Quack({ quack, onLikePress }) {
     <article className="flex w-100 bb b--black-10 pb2 mt2">
       <div className="w3">
         <Link to={linkToUser}>
-          <AvatarPhoto src={profileImageUrl} alt="#0" />
+          <AvatarPhoto src={profileImageUrl} alt={name} />
         </Link>
       </div>
       <div className="pl3 flex-auto">
