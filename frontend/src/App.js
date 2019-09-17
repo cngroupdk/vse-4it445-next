@@ -22,9 +22,7 @@ function AllProviders({ children }) {
 export function App() {
   return (
     <AllProviders>
-      <main>
-        <Routes />
-      </main>
+      <Routes />
     </AllProviders>
   );
 }

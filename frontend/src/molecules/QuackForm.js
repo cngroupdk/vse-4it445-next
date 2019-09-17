@@ -3,12 +3,18 @@ import classNames from 'classnames';
 
 import { Button, TextArea } from '../atoms/';
 
-export function QuackForm({ text, setText, onSubmit, maxLength = 250 }) {
+export function QuackForm({
+  text,
+  setText,
+  onSubmit,
+  maxLength = 250,
+  className,
+}) {
   const length = !text ? 0 : text.length;
   const isLengthValid = length <= maxLength;
   return (
     <form
-      className="pb2 black-90 bb b--black-10 cf"
+      className={classNames('pv2 black-90 bb b--black-10 cf', className)}
       onSubmit={e => {
         e.preventDefault();
         if (!onSubmit) return;
