@@ -1,37 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-import { HomeTemplate } from '../templates/HomeTemplate';
-import { useFetchRequest } from '../utils/request';
-import { useAuth } from '../utils/auth';
+import { Heading, MainSection } from '../atoms/';
+import { TopNavigation } from '../organisms/TopNavigation';
 
 export function HomePage() {
-  const { user } = useAuth();
-  const quacksFetcher = useFetchRequest('/v1/timeline', {
-    params: { limit: 20 },
-  });
-
-  const onLikePress = quack => {
-    console.log('like:', quack);
-  };
-
-  const [quackFormText, setQuackFormText] = useState('');
-  const submitQuack = ({ text }) => {
-    console.log('quack:', text);
-    setQuackFormText('');
-  };
-
-  const quackFormState = {
-    text: quackFormText,
-    setText: setQuackFormText,
-    onSubmit: submitQuack,
-  };
-
   return (
-    <HomeTemplate
-      quacksFetcher={quacksFetcher}
-      onLikePress={onLikePress}
-      quackFormState={quackFormState}
-      currentUser={user}
-    />
+    <div>
+      <TopNavigation />
+      <MainSection>
+        <Heading>Hello, 4IT445!</Heading>
+      </MainSection>
+    </div>
   );
 }

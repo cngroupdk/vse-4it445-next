@@ -1,7 +1,17 @@
 import React from 'react';
 
-import { Placeholder } from '../templates/Placeholder';
+import { Heading, MainSection } from '../atoms/';
+import { TopNavigation } from '../organisms/TopNavigation';
 
 export function AboutPage() {
-  return <Placeholder title="About" />;
+  return (
+    <>
+      <TopNavigation />
+      <MainSection>
+        <Heading>About</Heading>
+
+        <p>This page is empty for now...</p>
+      </MainSection>
+    </>
+  );
 }
