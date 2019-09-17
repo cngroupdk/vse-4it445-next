@@ -15,11 +15,10 @@ New JavaScript features (ES2015) are "enabled" for for all modern browsers with 
 
 ### Literature
 
-- [You Don't Know JS (book series)](https://github.com/getify/You-Dont-Know-JS)
-  - [Up & Going](https://github.com/getify/You-Dont-Know-JS/blob/master/up%20&%20going/README.md)
-  - [Scope & Closures](https://github.com/getify/You-Dont-Know-JS/blob/master/scope%20%26%20closures/README.md)
-  - [this & Object](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20&%20object%20prototypes/README.md)
-  - [ES6 & Beyond](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20&%20beyond/README.md)
+- [You Don't Know JS (book series)](https://github.com/getify/You-Dont-Know-JS/tree/1st-ed)
+  - [Up & Going](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/up%20%26%20going/README.md)
+  - [Scope & Closures](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/scope%20%26%20closures/README.md)
+  - [ES6 & Beyond](https://github.com/getify/You-Dont-Know-JS/blob/1st-ed/es6%20%26%20beyond/README.md)
 - [JavaScript: The Good Parts](http://shop.oreilly.com/product/9780596517748.do)
 
 ### JavaScript Packages
@@ -37,7 +36,7 @@ New JavaScript features (ES2015) are "enabled" for for all modern browsers with 
 ### React
 
 - **[React docs](https://reactjs.org/docs/getting-started.html)**
-- app is created using [create-react-app](https://create-react-app.dev/)
+- frontend app is created using [create-react-app](https://create-react-app.dev/)
 
 ## Server Setup
 
