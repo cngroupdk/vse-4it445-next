@@ -4,7 +4,7 @@ import * as yup from 'yup';
 import { withRouter } from 'react-router-dom';
 
 import { SignInTemplate } from '../templates/SignInTemplate';
-import { useRequest } from '../utils/request';
+import { useRequest } from '../hooks';
 import { useAuth } from '../utils/auth';
 
 const initialValues = {
@@ -26,33 +26,32 @@ const schema = yup.object().shape({
 
 function SignInPageBase({ history }) {
   const auth = useAuth();
-  const signinRequest = useRequest();
+  const [signinRequestState, signinRequest] = useRequest();
 
   const formal = useFormal(initialValues, {
     schema,
     onSubmit: ({ email, password }) => {
-      signinRequest.request('/v1/auth/signin', {
+      signinRequest({
+        url: '/v1/auth/signin',
         method: 'POST',
         data: { email, password },
-        onSuccess: ({ data }) => {
+      })
+        .then(({ data }) => {
           const { token, user } = data;
 
-          auth.signin({
-            token,
-            user,
-          });
+          auth.signin({ token, user });
 
           history.replace('/');
-        },
-      });
+        })
+        .catch(() => {});
     },
   });
 
   return (
     <SignInTemplate
       formal={formal}
-      isLoading={signinRequest.isLoading}
-      error={signinRequest.error}
+      isLoading={signinRequestState.isLoading}
+      error={signinRequestState.error}
     />
   );
 }

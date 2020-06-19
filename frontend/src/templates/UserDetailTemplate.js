@@ -18,11 +18,12 @@ import { TopNavigation } from '../organisms/TopNavigation';
 export function UserDetailTemplate({
   screenName,
   userFetcher,
+  onReload,
   onLikePress,
   quackFormState,
   currentUser,
 }) {
-  const { data, isLoading, error, refetch } = userFetcher;
+  const { data, isLoading, error } = userFetcher;
   const showQuackForm =
     quackFormState && currentUser && currentUser.screenName === screenName;
 
@@ -34,7 +35,7 @@ export function UserDetailTemplate({
 
         {error && (
           <ErrorBanner title={error.message}>
-            <Button color="red" onClick={() => refetch()}>
+            <Button color="red" onClick={onReload}>
               Reload
             </Button>
           </ErrorBanner>
@@ -57,8 +58,8 @@ export function UserDetailTemplate({
 
             {showQuackForm && <QuackForm {...quackFormState} />}
 
-            <TransparentButton className="fr" onClick={() => refetch()}>
-              <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} /> Refresh
+            <TransparentButton className="fr" onClick={onReload}>
+              <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} /> Reload
             </TransparentButton>
 
             <QuackList quacks={data.user.quacks} onLikePress={onLikePress} />

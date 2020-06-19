@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 
 import { HomeTemplate } from '../templates/HomeTemplate';
-import { useFetchRequest } from '../utils/request';
+import { useFetchRequest } from '../hooks';
 import { useAuth } from '../utils/auth';
 
 export function HomePage() {
   const { user } = useAuth();
-  const quacksFetcher = useFetchRequest('/v1/timeline', {
+
+  const [quacksState, requestQuacks] = useFetchRequest({
+    url: '/v1/timeline',
     params: { limit: 20 },
   });
 
@@ -28,7 +30,8 @@ export function HomePage() {
 
   return (
     <HomeTemplate
-      quacksFetcher={quacksFetcher}
+      quacksState={quacksState}
+      refetchQuacks={() => requestQuacks({ params: { page: 1 } })}
       onLikePress={onLikePress}
       quackFormState={quackFormState}
       currentUser={user}

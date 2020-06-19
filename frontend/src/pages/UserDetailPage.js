@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 import { UserDetailTemplate } from '../templates/UserDetailTemplate';
 import { PageNotFound } from './PageNotFound';
 import { useAuth } from '../utils/auth';
-import { useFetchRequest } from '../utils/request';
+import { useFetchRequest } from '../hooks';
 
 function UserDetailPageBase({ screenName }) {
   const { user } = useAuth();
-  const userFetcher = useFetchRequest(`/v1/user/${screenName}`);
+  const [userFetcher, refetchUser] = useFetchRequest(`/v1/user/${screenName}`);
 
   const onLikePress = quack => {
     console.log('like:', quack);
@@ -33,6 +33,7 @@ function UserDetailPageBase({ screenName }) {
   return (
     <UserDetailTemplate
       userFetcher={userFetcher}
+      onReload={() => refetchUser()}
       onLikePress={onLikePress}
       quackFormState={quackFormState}
       currentUser={user}

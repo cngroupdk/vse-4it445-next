@@ -8,7 +8,8 @@ import { QuackList } from '../organisms/QuackList';
 import { TopNavigation } from '../organisms/TopNavigation';
 
 export function HomeTemplate({
-  quacksFetcher,
+  quacksState,
+  refetchQuacks,
   onLikePress,
   quackFormState,
   currentUser,
@@ -21,24 +22,19 @@ export function HomeTemplate({
 
         {currentUser && <QuackForm {...quackFormState} />}
 
-        {quacksFetcher.data && (
-          <TransparentButton
-            className="fr"
-            onClick={() => quacksFetcher.refetch()}
-          >
-            <FontAwesomeIcon icon={faSyncAlt} spin={quacksFetcher.isLoading} />{' '}
+        {quacksState.data && (
+          <TransparentButton className="fr" onClick={() => refetchQuacks()}>
+            <FontAwesomeIcon icon={faSyncAlt} spin={quacksState.isLoading} />{' '}
             Refresh
           </TransparentButton>
         )}
 
         <QuackList
-          quacks={quacksFetcher.data && quacksFetcher.data.quacks}
-          isLoading={quacksFetcher.isLoading}
-          error={quacksFetcher.error}
+          quacks={quacksState.data && quacksState.data.quacks}
+          isLoading={quacksState.isLoading}
+          error={quacksState.error}
           onLikePress={onLikePress}
-          refetch={() =>
-            quacksFetcher.refetch({ params: { limit: 20, page: 1 } })
-          }
+          refetch={refetchQuacks}
         />
       </MainSection>
     </>
