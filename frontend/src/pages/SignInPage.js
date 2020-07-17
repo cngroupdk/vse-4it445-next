@@ -13,15 +13,8 @@ const initialValues = {
 };
 
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email()
-    .required()
-    .label('Email'),
-  password: yup
-    .string()
-    .required()
-    .label('Password'),
+  email: yup.string().email().required().label('Email'),
+  password: yup.string().required().label('Password'),
 });
 
 function SignInPageBase({ history }) {

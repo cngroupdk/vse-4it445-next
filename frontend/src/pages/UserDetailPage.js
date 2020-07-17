@@ -9,7 +9,7 @@ function UserDetailPageBase({ screenName }) {
   const { user } = useAuth();
   const [userFetcher, refetchUser] = useFetchRequest(`/v1/user/${screenName}`);
 
-  const onLikePress = quack => {
+  const onLikePress = (quack) => {
     console.log('like:', quack);
   };
 

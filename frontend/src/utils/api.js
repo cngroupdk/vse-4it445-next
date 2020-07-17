@@ -60,8 +60,8 @@ function useInstallSignoutApiInterceptror(api) {
 
   useEffect(() => {
     const signoutInterceptr = api.interceptors.response.use(
-      response => response,
-      error => {
+      (response) => response,
+      (error) => {
         const isInvalidTokenResponse =
           error && error.response && error.response.status === 401;
 
