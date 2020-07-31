@@ -51,7 +51,7 @@ function createContextValue({ token, user, setState }) {
 function usePersistedAuth(defaultState) {
   const [state, setStateRaw] = useState(() => getStorageState(defaultState));
 
-  const setState = useCallback(newState => {
+  const setState = useCallback((newState) => {
     setStateRaw(newState);
     setStorageState(newState);
   }, []);

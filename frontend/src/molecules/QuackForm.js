@@ -15,7 +15,7 @@ export function QuackForm({
   return (
     <form
       className={classNames('pv2 black-90 bb b--black-10 cf', className)}
-      onSubmit={e => {
+      onSubmit={(e) => {
         e.preventDefault();
         if (!onSubmit) return;
         onSubmit({ text });
@@ -24,7 +24,7 @@ export function QuackForm({
       <div>
         <TextArea
           value={text}
-          onChange={e => {
+          onChange={(e) => {
             if (!setText) return;
             setText(e.target.value);
           }}

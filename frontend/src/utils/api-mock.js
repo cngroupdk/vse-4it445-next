@@ -32,7 +32,7 @@ export function installApiMocks(api) {
 
 function getMockQuacks(currentMocks) {
   const { quacks, users } = currentMocks;
-  return quacks.map(quack => ({
+  return quacks.map((quack) => ({
     ...quack,
     userId: undefined,
     user: users.find(({ id }) => id === quack.userId),
@@ -49,7 +49,7 @@ function getMockUserDetailPage(currentMocks, screenName) {
     ...user,
     quacks: quacks
       .filter(({ userId }) => userId === user.id)
-      .map(quack => ({
+      .map((quack) => ({
         ...quack,
         userId: undefined,
         user,
@@ -60,7 +60,7 @@ function getMockUserDetailPage(currentMocks, screenName) {
 function getMockUser(currentMocks, screenName) {
   const { users } = currentMocks;
 
-  const user = users.find(user => screenName === user.screenName);
+  const user = users.find((user) => screenName === user.screenName);
   if (!user) return null;
 
   return user;

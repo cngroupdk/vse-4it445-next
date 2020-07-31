@@ -43,7 +43,7 @@ export function useRequest(initialState = {}) {
       promiseDispatch(
         () =>
           requestPromise
-            .then(response => {
+            .then((response) => {
               const { data } = response;
 
               log(`[api.${method}] success`, url, data);
@@ -51,7 +51,7 @@ export function useRequest(initialState = {}) {
               cancelRef.current = null;
               return data;
             })
-            .catch(error => {
+            .catch((error) => {
               const isCanelation =
                 cancelSource && cancelSource.token && cancelSource.token.reason;
 

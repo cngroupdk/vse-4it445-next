@@ -15,7 +15,7 @@ export function QuackList({ quacks, isLoading, error, onLikePress, refetch }) {
         </ErrorBanner>
       )}
       {quacks &&
-        quacks.map(quack => (
+        quacks.map((quack) => (
           <Quack key={quack.id} quack={quack} onLikePress={onLikePress} />
         ))}
     </>

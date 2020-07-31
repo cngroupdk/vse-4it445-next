@@ -16,25 +16,25 @@ export function usePromise(initialState = {}) {
     const promise = getPromise();
     currentPromiseRef.current = promise;
 
-    setState(oldState => ({ ...oldState, isLoading: true }));
+    setState((oldState) => ({ ...oldState, isLoading: true }));
 
     promise
-      .then(data => {
+      .then((data) => {
         if (currentPromiseRef.current !== promise) return;
         currentPromiseRef.current = null;
 
-        setState(oldState => ({
+        setState((oldState) => ({
           ...oldState,
           data,
           isLoading: false,
           error: undefined,
         }));
       })
-      .catch(error => {
+      .catch((error) => {
         if (currentPromiseRef.current !== promise) return;
         currentPromiseRef.current = null;
 
-        setState(oldState => ({
+        setState((oldState) => ({
           ...oldState,
           isLoading: false,
           error,

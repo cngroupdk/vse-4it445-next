@@ -4,7 +4,7 @@
 
 ## JavaScript
 
-We will be using [Node.js](https://nodejs.org/) v10.16.2.
+We will be using [Node.js](https://nodejs.org/). Please see `.nvmrc` to find current node.js version we are using.
 New JavaScript features (ES2015) are "enabled" for for all modern browsers with [Babel](https://babeljs.io/).
 
 ### Reference
