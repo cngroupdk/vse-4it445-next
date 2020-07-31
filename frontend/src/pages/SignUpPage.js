@@ -13,15 +13,8 @@ const initialValues = {
 };
 
 const schema = yup.object().shape({
-  email: yup
-    .string()
-    .email()
-    .required()
-    .label('Email'),
-  password: yup
-    .string()
-    .required()
-    .label('Password'),
+  email: yup.string().email().required().label('Email'),
+  password: yup.string().required().label('Password'),
   passwordConfirmation: yup
     .string()
     .required()
@@ -40,7 +33,7 @@ function SignUpPageBase() {
         method: 'POST',
         data: { email, password, passwordConfirmation },
       })
-        .then(data => {
+        .then((data) => {
           // TODO
           console.log(data);
         })
