@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Heading, MainSection } from '../atoms/';
-import { TopNavigation } from '../organisms/TopNavigation';
+import { TopNavigation } from '../organisms/';
 
 export function Placeholder({ title, children }) {
   return (

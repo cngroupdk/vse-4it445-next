@@ -12,8 +12,7 @@ import {
   TransparentButton,
 } from '../atoms/';
 import { QuackForm } from '../molecules/';
-import { QuackList } from '../organisms/QuackList';
-import { TopNavigation } from '../organisms/TopNavigation';
+import { QuackList, TopNavigation } from '../organisms/';
 
 export function UserDetailTemplate({
   screenName,
