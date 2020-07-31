@@ -1,24 +1,13 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart as faHeartSolid } from '@fortawesome/free-solid-svg-icons';
-import { faHeart as faHeartRegular } from '@fortawesome/free-regular-svg-icons';
 
-import {
-  AvatarPhoto,
-  Link,
-  TransparentButton,
-  UserName,
-  UserScreenName,
-} from '../atoms/';
+import { AvatarPhoto, Link, UserName, UserScreenName } from '../atoms/';
 import { formatDate } from '../utils/date';
 
-export function Quack({ quack, onLikePress }) {
+export function Quack({ quack }) {
   const {
     id,
     user: { name, screenName, profileImageUrl },
     text,
-    likeCount,
-    liked,
     createdAt,
   } = quack;
 
@@ -43,21 +32,6 @@ export function Quack({ quack, onLikePress }) {
           </Link>
         </div>
         <div className="black-90 pre-line">{text}</div>
-        <div className="pt2">
-          <TransparentButton
-            className="mr2"
-            onClick={() => {
-              if (!onLikePress) return;
-              onLikePress(quack);
-            }}
-          >
-            <FontAwesomeIcon
-              icon={liked ? faHeartSolid : faHeartRegular}
-              className="mr1"
-            />{' '}
-            {likeCount}
-          </TransparentButton>
-        </div>
       </div>
     </article>
   );

@@ -19,16 +19,12 @@ export const quacks = [
     createdAt: '2019-08-08T05:43:18.023Z',
     userId: 1,
     text: 'Hello, People of the World!',
-    likeCount: 399,
-    liked: true,
   },
   {
     id: 2,
     createdAt: '2019-08-06T14:10:51.023Z',
     userId: 2,
     text: 'Como setas?',
-    likeCount: 2,
-    liked: false,
   },
   {
     id: 3,
@@ -36,8 +32,6 @@ export const quacks = [
     userId: 1,
     text:
       'Hello, People of the World! Hello, People of the World! Hello, People of the World! Hello, People of the World! Hello,\n\nWorld!',
-    likeCount: 0,
-    liked: false,
   },
 ];
 

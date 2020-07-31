@@ -9,7 +9,6 @@ import { QuackList, TopNavigation } from '../organisms/';
 export function HomeTemplate({
   quacksState,
   refetchQuacks,
-  onLikePress,
   quackFormState,
   currentUser,
 }) {
@@ -32,7 +31,6 @@ export function HomeTemplate({
           quacks={quacksState.data && quacksState.data.quacks}
           isLoading={quacksState.isLoading}
           error={quacksState.error}
-          onLikePress={onLikePress}
           refetch={refetchQuacks}
         />
       </MainSection>

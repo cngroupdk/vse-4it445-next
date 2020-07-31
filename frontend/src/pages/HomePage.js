@@ -12,10 +12,6 @@ export function HomePage() {
     params: { limit: 20 },
   });
 
-  const onLikePress = (quack) => {
-    console.log('like:', quack);
-  };
-
   const [quackFormText, setQuackFormText] = useState('');
   const submitQuack = ({ text }) => {
     console.log('quack:', text);
@@ -32,7 +28,6 @@ export function HomePage() {
     <HomeTemplate
       quacksState={quacksState}
       refetchQuacks={() => requestQuacks({ params: { page: 1 } })}
-      onLikePress={onLikePress}
       quackFormState={quackFormState}
       currentUser={user}
     />
