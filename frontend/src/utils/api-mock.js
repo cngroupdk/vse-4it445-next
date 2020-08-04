@@ -24,6 +24,9 @@ export function installApiMocks(api) {
     user: mocks.users[0],
   });
 
+  // SignInPage
+  mockAdapter.onPost('/api/v1/auth/signup').reply(200, {});
+
   // all other
   mockAdapter.onAny().passThrough();
 }

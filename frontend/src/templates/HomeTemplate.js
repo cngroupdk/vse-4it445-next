@@ -4,8 +4,7 @@ import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Heading, MainSection, TransparentButton } from '../atoms/';
 import { QuackForm } from '../molecules/';
-import { QuackList } from '../organisms/QuackList';
-import { TopNavigation } from '../organisms/TopNavigation';
+import { QuackList, TopNavigation } from '../organisms/';
 
 export function HomeTemplate({
   quacksState,

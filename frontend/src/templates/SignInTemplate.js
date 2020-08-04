@@ -1,8 +1,7 @@
 import React from 'react';
 
 import { Heading, Link, MainSection } from '../atoms/';
-import { TopNavigation } from '../organisms/TopNavigation';
-import { SignInForm } from '../organisms/SignInForm';
+import { SignInForm, TopNavigation } from '../organisms/';
 
 export function SignInTemplate({ formal, isLoading, error }) {
   return (
