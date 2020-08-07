@@ -3,7 +3,7 @@ import React from 'react';
 import { Button, ErrorBanner, Loading } from '../atoms/';
 import { Quack } from '../molecules/';
 
-export function QuackList({ quacks, isLoading, error, onLikePress, refetch }) {
+export function QuackList({ quacks, isLoading, error, refetch }) {
   return (
     <>
       {isLoading && !quacks && <Loading />}
@@ -14,10 +14,7 @@ export function QuackList({ quacks, isLoading, error, onLikePress, refetch }) {
           </Button>
         </ErrorBanner>
       )}
-      {quacks &&
-        quacks.map((quack) => (
-          <Quack key={quack.id} quack={quack} onLikePress={onLikePress} />
-        ))}
+      {quacks && quacks.map((quack) => <Quack key={quack.id} quack={quack} />)}
     </>
   );
 }
