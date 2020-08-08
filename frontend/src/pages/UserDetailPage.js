@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { UserDetailTemplate } from '../templates/UserDetailTemplate';
@@ -9,9 +9,15 @@ import { useFetchRequest } from '../hooks';
 export function UserDetailPage() {
   const { user } = useAuth();
   const { screenName } = useParams();
+  const url = `/v1/user/${screenName}`;
   const [userFetcher, refetchUser] = useFetchRequest({
-    url: `/v1/user/${screenName}`,
+    lazy: true,
+    url,
   });
+
+  useEffect(() => {
+    refetchUser({ url });
+  }, [refetchUser, url]);
 
   const [quackFormText, setQuackFormText] = useState('');
   const submitQuack = ({ text }) => {
