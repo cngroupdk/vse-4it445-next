@@ -1,7 +1,7 @@
 import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
-import { withRouter } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import classNames from 'classnames';
 
 import { AvatarPhoto, Link } from '../atoms/';
@@ -14,8 +14,9 @@ const navButtonStyle = classNames(
   'bg-transparent bg-animate hover-bg-white hover-black pv2 ph3 mh3 br-pill ba b--white-20',
 );
 
-function TopNavigationBase({ history }) {
+export function TopNavigation() {
   const { user, signout } = useAuth();
+  const history = useHistory();
 
   return (
     <nav className="flex justify-between bb b--white-10 bg-dark-green white">
@@ -76,5 +77,3 @@ function TopNavigationBase({ history }) {
     </nav>
   );
 }
-
-export const TopNavigation = withRouter(TopNavigationBase);

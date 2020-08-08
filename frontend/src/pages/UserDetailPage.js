@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 import { UserDetailTemplate } from '../templates/UserDetailTemplate';
 import { PageNotFound } from './PageNotFound';
 import { useAuth } from '../utils/auth';
 import { useFetchRequest } from '../hooks';
 
-function UserDetailPageBase({ screenName }) {
+export function UserDetailPage() {
   const { user } = useAuth();
-  const [userFetcher, refetchUser] = useFetchRequest(`/v1/user/${screenName}`);
-
-  const onLikePress = (quack) => {
-    console.log('like:', quack);
-  };
+  const { screenName } = useParams();
+  const [userFetcher, refetchUser] = useFetchRequest({
+    url: `/v1/user/${screenName}`,
+  });
 
   const [quackFormText, setQuackFormText] = useState('');
   const submitQuack = ({ text }) => {
@@ -34,15 +34,9 @@ function UserDetailPageBase({ screenName }) {
     <UserDetailTemplate
       userFetcher={userFetcher}
       onReload={() => refetchUser()}
-      onLikePress={onLikePress}
       quackFormState={quackFormState}
       currentUser={user}
       screenName={screenName}
     />
   );
-}
-
-export function UserDetailPage({ match }) {
-  const { screenName } = match.params;
-  return <UserDetailPageBase key={screenName} screenName={screenName} />;
 }
