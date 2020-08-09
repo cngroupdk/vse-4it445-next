@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SignInTemplate } from '../templates/SignInTemplate';
@@ -10,21 +10,24 @@ export function SignInPage() {
   const [signinRequestState, signinRequest] = useRequest();
   const history = useHistory();
 
-  function handleSignInFormSubmit({ email, password }) {
-    signinRequest({
-      url: '/v1/auth/signin',
-      method: 'POST',
-      data: { email, password },
-    })
-      .then(({ data }) => {
-        const { token, user } = data;
-
-        auth.signin({ token, user });
-
-        history.replace('/');
+  const handleSignInFormSubmit = useCallback(
+    ({ email, password }) => {
+      signinRequest({
+        url: '/v1/auth/signin',
+        method: 'POST',
+        data: { email, password },
       })
-      .catch(() => {});
-  }
+        .then(({ data }) => {
+          const { token, user } = data;
+
+          auth.signin({ token, user });
+
+          history.replace('/');
+        })
+        .catch(() => {});
+    },
+    [signinRequest, history, auth],
+  );
 
   return (
     <SignInTemplate
