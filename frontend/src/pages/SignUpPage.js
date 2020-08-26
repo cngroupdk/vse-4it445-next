@@ -1,33 +1,13 @@
-import React from 'react';
-import useFormal from '@kevinwolf/formal-web';
-import * as yup from 'yup';
-import { withRouter } from 'react-router-dom';
+import React, { useCallback } from 'react';
 
 import { SignUpTemplate } from '../templates/SignUpTemplate';
 import { useRequest } from '../hooks';
 
-const initialValues = {
-  email: '',
-  password: '',
-  passwordConfirmation: '',
-};
-
-const schema = yup.object().shape({
-  email: yup.string().email().required().label('Email'),
-  password: yup.string().required().label('Password'),
-  passwordConfirmation: yup
-    .string()
-    .required()
-    .oneOf([yup.ref('password'), null], 'Passwords must match')
-    .label('Password Confirmation'),
-});
-
-function SignUpPageBase() {
+export function SignUpPage() {
   const [signupRequestState, signupRequest] = useRequest();
 
-  const formal = useFormal(initialValues, {
-    schema,
-    onSubmit: ({ email, password, passwordConfirmation }) => {
+  const handleSignUpFormSubmit = useCallback(
+    ({ email, password, passwordConfirmation }) => {
       signupRequest({
         url: '/v1/auth/signup',
         method: 'POST',
@@ -39,15 +19,14 @@ function SignUpPageBase() {
         })
         .catch(() => {});
     },
-  });
+    [signupRequest],
+  );
 
   return (
     <SignUpTemplate
-      formal={formal}
       isLoading={signupRequestState.isLoading}
       error={signupRequestState.error}
+      onSubmit={handleSignUpFormSubmit}
     />
   );
 }
-
-export const SignUpPage = withRouter(SignUpPageBase);

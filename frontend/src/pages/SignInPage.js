@@ -1,29 +1,17 @@
-import React from 'react';
-import useFormal from '@kevinwolf/formal-web';
-import * as yup from 'yup';
-import { withRouter } from 'react-router-dom';
+import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { SignInTemplate } from '../templates/SignInTemplate';
 import { useRequest } from '../hooks';
 import { useAuth } from '../utils/auth';
 
-const initialValues = {
-  email: '',
-  password: '',
-};
-
-const schema = yup.object().shape({
-  email: yup.string().email().required().label('Email'),
-  password: yup.string().required().label('Password'),
-});
-
-function SignInPageBase({ history }) {
+export function SignInPage() {
   const auth = useAuth();
   const [signinRequestState, signinRequest] = useRequest();
+  const history = useHistory();
 
-  const formal = useFormal(initialValues, {
-    schema,
-    onSubmit: ({ email, password }) => {
+  const handleSignInFormSubmit = useCallback(
+    ({ email, password }) => {
       signinRequest({
         url: '/v1/auth/signin',
         method: 'POST',
@@ -38,15 +26,14 @@ function SignInPageBase({ history }) {
         })
         .catch(() => {});
     },
-  });
+    [signinRequest, history, auth],
+  );
 
   return (
     <SignInTemplate
-      formal={formal}
       isLoading={signinRequestState.isLoading}
       error={signinRequestState.error}
+      onSubmit={handleSignInFormSubmit}
     />
   );
 }
-
-export const SignInPage = withRouter(SignInPageBase);

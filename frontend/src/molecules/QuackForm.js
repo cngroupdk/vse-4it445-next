@@ -12,6 +12,7 @@ export function QuackForm({
 }) {
   const length = !text ? 0 : text.length;
   const isLengthValid = length <= maxLength;
+
   return (
     <form
       className={classNames('pv2 black-90 bb b--black-10 cf', className)}

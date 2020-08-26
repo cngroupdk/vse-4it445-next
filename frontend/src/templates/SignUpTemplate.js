@@ -3,7 +3,7 @@ import React from 'react';
 import { Heading, Link, MainSection } from '../atoms/';
 import { SignUpForm, TopNavigation } from '../organisms/';
 
-export function SignUpTemplate({ formal, isLoading, error }) {
+export function SignUpTemplate({ isLoading, error, onSubmit }) {
   return (
     <>
       <TopNavigation />
@@ -11,10 +11,10 @@ export function SignUpTemplate({ formal, isLoading, error }) {
         <Heading>Sign Up</Heading>
 
         <SignUpForm
-          formal={formal}
           isLoading={isLoading}
           errorMessage={error && error.message}
           className="mt3"
+          onSubmit={onSubmit}
         >
           <div className="lh-copy">
             <Link className="db f5 dark-green" to="/auth/signin">

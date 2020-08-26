@@ -18,7 +18,6 @@ export function UserDetailTemplate({
   screenName,
   userFetcher,
   onReload,
-  onLikePress,
   quackFormState,
   currentUser,
 }) {
@@ -61,7 +60,7 @@ export function UserDetailTemplate({
               <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} /> Reload
             </TransparentButton>
 
-            <QuackList quacks={data.user.quacks} onLikePress={onLikePress} />
+            <QuackList quacks={data.user.quacks} />
           </>
         )}
       </MainSection>
