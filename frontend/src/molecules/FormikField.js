@@ -3,7 +3,7 @@ import { useField } from 'formik';
 
 import { Field } from './';
 
-export function FormField({ name, ...props }) {
+export function FormikField({ name, ...props }) {
   const [field, meta] = useField(name);
 
   const error = meta.touched && meta.error;

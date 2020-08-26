@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 
 import { Button, ErrorBanner } from '../atoms/';
-import { FormField } from '../molecules/';
+import { FormikField } from '../molecules/';
 
 const initialValues = {
   email: '',
@@ -38,7 +38,7 @@ export function SignUpForm({
     >
       <Form className={className}>
         {errorMessage && <ErrorBanner title={errorMessage} className="mb3" />}
-        <FormField
+        <FormikField
           id="email"
           name="email"
           label="Email"
@@ -49,7 +49,7 @@ export function SignUpForm({
           autoCorrect="off"
           autoCapitalize="off"
         />
-        <FormField
+        <FormikField
           id="password"
           name="password"
           label="Password"
@@ -58,7 +58,7 @@ export function SignUpForm({
           autoCorrect="off"
           autoCapitalize="off"
         />
-        <FormField
+        <FormikField
           id="passwordConfirmation"
           name="passwordConfirmation"
           label="Password Confirmation"
