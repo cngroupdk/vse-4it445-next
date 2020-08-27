@@ -5,14 +5,12 @@ import { formatDate } from '../utils/date';
 
 export function Quack({ quack }) {
   const {
-    id,
     user: { name, screenName, profileImageUrl },
     text,
     createdAt,
   } = quack;
 
   const linkToUser = `/${screenName}`;
-  const linkToQuack = `/${screenName}/status/${id}`;
 
   return (
     <article className="flex w-100 bb b--black-10 pb2 mt2">
@@ -27,9 +25,7 @@ export function Quack({ quack }) {
             <UserName name={name} /> <UserScreenName screenName={screenName} />
           </Link>
           {' - '}
-          <Link to={linkToQuack} className="black-60">
-            <span className="f6 fw4 black-60">{formatDate(createdAt)}</span>
-          </Link>
+          <span className="f6 fw4 black-60">{formatDate(createdAt)}</span>
         </div>
         <div className="black-90 pre-line">{text}</div>
       </div>

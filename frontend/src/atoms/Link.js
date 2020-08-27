@@ -2,9 +2,15 @@ import React from 'react';
 import classNames from 'classnames';
 import { Link as RouterLink } from 'react-router-dom';
 
-export function Link({ children, className, noUnderline, ...rest }) {
+export function Link({
+  children,
+  className,
+  noUnderline,
+  as: Component = RouterLink,
+  ...rest
+}) {
   return (
-    <RouterLink
+    <Component
       className={classNames(
         'link no-underline',
         { 'underline-hover': !noUnderline },
@@ -13,6 +19,6 @@ export function Link({ children, className, noUnderline, ...rest }) {
       {...rest}
     >
       {children}
-    </RouterLink>
+    </Component>
   );
 }

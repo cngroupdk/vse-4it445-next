@@ -13,15 +13,13 @@ export function SignInTemplate({ isLoading, error, onSubmit }) {
         <SignInForm
           isLoading={isLoading}
           errorMessage={error && error.message}
-          className="mt3"
           onSubmit={onSubmit}
+          className="mt3"
         >
           <div className="lh-copy">
-            <Link className="db f5 dark-green" to="/auth/signup">
+            or{' '}
+            <Link className="f5 dark-green" to="/auth/signup">
               Sign Up
-            </Link>
-            <Link className="db f5 dark-green" to="/auth/password-reset">
-              Forgot your password?
             </Link>
           </div>
         </SignInForm>

@@ -29,6 +29,7 @@ export function SignInForm({
       onSubmit={onSubmit}
       initialValues={initialValues}
       validationSchema={schema}
+      validateOnBlur={false}
     >
       <Form className={className}>
         {errorMessage && <ErrorBanner title={errorMessage} className="mb3" />}

@@ -2,17 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
-import classNames from 'classnames';
 
-import { AvatarPhoto, Link } from '../atoms/';
+import { AvatarPhoto, Link, NavLink, Button } from '../atoms/';
 import { useAuth } from '../utils/auth';
-
-const navLinkTextStyle = 'f6 dib white';
-const navLinkStyle = classNames(navLinkTextStyle, 'dim');
-const navButtonStyle = classNames(
-  navLinkTextStyle,
-  'bg-transparent bg-animate hover-bg-white hover-black pv2 ph3 mh3 br-pill ba b--white-20',
-);
 
 export function TopNavigation() {
   const { user, signout } = useAuth();
@@ -25,24 +17,18 @@ export function TopNavigation() {
         Quacker
       </Link>
       <div className="flex-grow flex items-center">
-        <Link to="/" className={classNames(navLinkStyle, 'pa3')}>
+        <NavLink exact to="/" className="pa3">
           Home
-        </Link>
-        <Link to="/about" className={classNames(navLinkStyle, 'pa3')}>
+        </NavLink>
+        <NavLink to="/about" className="pa3">
           About
-        </Link>
+        </NavLink>
         {user ? (
           <>
-            <Link to="/settings" className={classNames(navLinkStyle, 'pa3')}>
-              Settings
-            </Link>
-            <Link
+            <NavLink
               to={`/${user.screenName}`}
               noUnderline
-              className={classNames(
-                navLinkStyle,
-                'ph3 pv1 h-100 flex items-center',
-              )}
+              className="ph3 pv1 h-100 flex items-center"
             >
               <AvatarPhoto
                 className="v-mid dib mr2"
@@ -51,9 +37,11 @@ export function TopNavigation() {
                 size={2}
               />{' '}
               {user.name}
-            </Link>
-            <button
-              className={navButtonStyle}
+            </NavLink>
+            <Button
+              color="navbar"
+              border
+              narrow
               onClick={() => {
                 signout();
                 history.push('/');
@@ -61,16 +49,23 @@ export function TopNavigation() {
               }}
             >
               Sign Out
-            </button>
+            </Button>
           </>
         ) : (
           <>
-            <Link to="/auth/signin" className={classNames(navLinkStyle, 'pa3')}>
+            <NavLink to="/auth/signin" className="pa3">
               Sign In
-            </Link>
-            <Link to="/auth/signup" noUnderline className={navButtonStyle}>
+            </NavLink>
+            <Button
+              to="/auth/signup"
+              as={Link}
+              color="navbar"
+              narrow
+              border
+              noUnderline
+            >
               Sign Up
-            </Link>
+            </Button>
           </>
         )}
       </div>

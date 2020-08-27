@@ -6,23 +6,15 @@ import { ApiProvider } from './utils/api';
 import { AuthProvider } from './utils/auth';
 import { Routes } from './Routes';
 
-function AllProviders({ children }) {
+export function App() {
   return (
     <AuthProvider>
       <ApiProvider>
         <BrowserRouter>
           <ScrollToTop />
-          {children}
+          <Routes />
         </BrowserRouter>
       </ApiProvider>
     </AuthProvider>
-  );
-}
-
-export function App() {
-  return (
-    <AllProviders>
-      <Routes />
-    </AllProviders>
   );
 }
