@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { ErrorMessage, Label, TextInput } from '../atoms/';
+import { ErrorMessage, Label, TextInput } from 'src/atoms/';
 
 export function Field({ id, label, error, ...props }) {
   return (

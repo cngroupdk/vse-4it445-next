@@ -2,9 +2,9 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { Heading, MainSection, TransparentButton } from '../atoms/';
-import { QuackForm } from '../molecules/';
-import { QuackList, TopNavigation } from '../organisms/';
+import { Heading, MainSection, TransparentButton } from 'src/atoms/';
+import { QuackForm } from 'src/molecules/';
+import { QuackList, TopNavigation } from 'src/organisms/';
 
 export function HomeTemplate({
   quacksState,

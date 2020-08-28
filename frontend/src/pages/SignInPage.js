@@ -1,9 +1,9 @@
 import React, { useCallback } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { SignInTemplate } from '../templates/SignInTemplate';
-import { useRequest } from '../hooks';
-import { useAuth } from '../utils/auth';
+import { SignInTemplate } from 'src/templates/SignInTemplate';
+import { useRequest } from 'src/hooks';
+import { useAuth } from 'src/utils/auth';
 
 export function SignInPage() {
   const auth = useAuth();

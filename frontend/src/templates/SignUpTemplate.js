@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { Heading, Link, MainSection } from '../atoms/';
-import { SignUpForm, TopNavigation } from '../organisms/';
+import { Heading, Link, MainSection } from 'src/atoms/';
+import { SignUpForm, TopNavigation } from 'src/organisms/';
+import { route } from 'src/Routes';
 
 export function SignUpTemplate({ isLoading, error, onSubmit }) {
   return (
@@ -13,11 +14,12 @@ export function SignUpTemplate({ isLoading, error, onSubmit }) {
         <SignUpForm
           isLoading={isLoading}
           errorMessage={error && error.message}
-          className="mt3"
           onSubmit={onSubmit}
+          className="mt3"
         >
           <div className="lh-copy">
-            <Link className="db f5 dark-green" to="/auth/signin">
+            or{' '}
+            <Link className="f5 dark-green" to={route.signIn()}>
               Sign In
             </Link>
           </div>

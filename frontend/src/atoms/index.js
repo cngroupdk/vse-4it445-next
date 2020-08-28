@@ -7,6 +7,7 @@ export { Label } from './Label';
 export { Link } from './Link';
 export { Loading } from './Loading';
 export { MainSection } from './MainSection';
+export { NavLink } from './NavLink';
 export { ScrollToTop } from './ScrollToTop';
 export { TextArea } from './TextArea';
 export { TextInput } from './TextInput';

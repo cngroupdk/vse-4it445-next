@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Placeholder } from '../templates/Placeholder';
+import { AboutTemplate } from 'src/templates/AboutTemplate';
 
 export function AboutPage() {
-  return <Placeholder title="About" />;
+  return <AboutTemplate />;
 }

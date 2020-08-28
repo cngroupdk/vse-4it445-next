@@ -1,7 +1,7 @@
 import React, { useCallback } from 'react';
 
-import { SignUpTemplate } from '../templates/SignUpTemplate';
-import { useRequest } from '../hooks';
+import { SignUpTemplate } from 'src/templates/SignUpTemplate';
+import { useRequest } from 'src/hooks';
 
 export function SignUpPage() {
   const [signupRequestState, signupRequest] = useRequest();

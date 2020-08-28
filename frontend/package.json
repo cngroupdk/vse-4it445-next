@@ -18,7 +18,7 @@
     "axios": "0.20.0",
     "axios-mock-adapter": "1.18.2",
     "classnames": "2.2.6",
-    "date-fns": "2.15.0",
+    "date-fns": "2.16.0",
     "formik": "2.1.5",
     "lodash": "4.17.20",
     "react": "^16.13.1",

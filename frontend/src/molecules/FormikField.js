@@ -1,7 +1,7 @@
 import React from 'react';
 import { useField } from 'formik';
 
-import { Field } from './';
+import { Field } from './Field';
 
 export function FormikField({ name, ...props }) {
   const [field, meta] = useField(name);

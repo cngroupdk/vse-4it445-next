@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { Button, ErrorBanner, Loading } from '../atoms/';
-import { Quack } from '../molecules/';
+import { Button, ErrorBanner, Loading } from 'src/atoms/';
+import { Quack } from 'src/molecules/';
 
 export function QuackList({ quacks, isLoading, error, refetch }) {
   return (

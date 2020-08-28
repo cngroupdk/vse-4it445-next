@@ -1,28 +1,20 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { ScrollToTop } from './atoms/';
-import { ApiProvider } from './utils/api';
-import { AuthProvider } from './utils/auth';
-import { Routes } from './Routes';
+import { ScrollToTop } from 'src/atoms/';
+import { ApiProvider } from 'src/utils/api';
+import { AuthProvider } from 'src/utils/auth';
+import { Routes } from 'src/Routes';
 
-function AllProviders({ children }) {
+export function App() {
   return (
     <AuthProvider>
       <ApiProvider>
         <BrowserRouter>
           <ScrollToTop />
-          {children}
+          <Routes />
         </BrowserRouter>
       </ApiProvider>
     </AuthProvider>
-  );
-}
-
-export function App() {
-  return (
-    <AllProviders>
-      <Routes />
-    </AllProviders>
   );
 }

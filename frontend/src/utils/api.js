@@ -8,7 +8,7 @@ import React, {
 import axios from 'axios';
 
 import { useAuth } from './auth';
-import { config } from '../config';
+import { config } from 'src/config';
 
 const globalApiInstance = axios.create({
   baseURL: '/api',
