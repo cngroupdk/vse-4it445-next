@@ -1,12 +1,12 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 
-import { AboutPage } from './pages/AboutPage';
-import { HomePage } from './pages/HomePage';
-import { PageNotFound } from './pages/PageNotFound';
-import { SignInPage } from './pages/SignInPage';
-import { SignUpPage } from './pages/SignUpPage';
-import { UserDetailPage } from './pages/UserDetailPage';
+import { AboutPage } from 'src/pages/AboutPage';
+import { HomePage } from 'src/pages/HomePage';
+import { PageNotFound } from 'src/pages/PageNotFound';
+import { SignInPage } from 'src/pages/SignInPage';
+import { SignUpPage } from 'src/pages/SignUpPage';
+import { UserDetailPage } from 'src/pages/UserDetailPage';
 
 export const route = {
   home: () => `/`,
