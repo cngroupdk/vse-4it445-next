@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { Button, TextArea } from '../atoms/';
+import { Button, TextArea } from 'src/atoms/';
 
 export function QuackForm({
   text,

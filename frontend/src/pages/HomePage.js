@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-import { HomeTemplate } from '../templates/HomeTemplate';
-import { useFetchRequest } from '../hooks';
-import { useAuth } from '../utils/auth';
+import { HomeTemplate } from 'src/templates/HomeTemplate';
+import { useFetchRequest } from 'src/hooks';
+import { useAuth } from 'src/utils/auth';
 
 export function HomePage() {
   const { user } = useAuth();

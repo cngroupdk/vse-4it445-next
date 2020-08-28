@@ -3,8 +3,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 import { useHistory } from 'react-router-dom';
 
-import { AvatarPhoto, Link, NavLink, Button } from '../atoms/';
-import { useAuth } from '../utils/auth';
+import { AvatarPhoto, Link, NavLink, Button } from 'src/atoms/';
+import { useAuth } from 'src/utils/auth';
+import { route } from 'src/Routes';
 
 export function TopNavigation() {
   const { user, signout } = useAuth();
@@ -12,21 +13,25 @@ export function TopNavigation() {
 
   return (
     <nav className="flex justify-between bb b--white-10 bg-dark-green white">
-      <Link to="/" noUnderline className="b white flex items-center pv2 ph3">
+      <Link
+        to={route.home()}
+        noUnderline
+        className="b white flex items-center pv2 ph3"
+      >
         <FontAwesomeIcon icon={faFeatherAlt} className="mr2 f4" />
         Quacker
       </Link>
       <div className="flex-grow flex items-center">
-        <NavLink exact to="/" className="pa3">
+        <NavLink exact to={route.home()} className="pa3">
           Home
         </NavLink>
-        <NavLink to="/about" className="pa3">
+        <NavLink to={route.about()} className="pa3">
           About
         </NavLink>
         {user ? (
           <>
             <NavLink
-              to={`/${user.screenName}`}
+              to={route.userDetail(user.screenName)}
               noUnderline
               className="ph3 pv1 h-100 flex items-center"
             >
@@ -44,7 +49,7 @@ export function TopNavigation() {
               narrow
               onClick={() => {
                 signout();
-                history.push('/');
+                history.push(route.home());
                 window.location.reload();
               }}
             >
@@ -53,11 +58,11 @@ export function TopNavigation() {
           </>
         ) : (
           <>
-            <NavLink to="/auth/signin" className="pa3">
+            <NavLink to={route.signIn()} className="pa3">
               Sign In
             </NavLink>
             <Button
-              to="/auth/signup"
+              to={route.signUp()}
               as={Link}
               color="navbar"
               narrow

@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { UserDetailTemplate } from '../templates/UserDetailTemplate';
+import { UserDetailTemplate } from 'src/templates/UserDetailTemplate';
 import { PageNotFound } from './PageNotFound';
-import { useAuth } from '../utils/auth';
-import { useFetchRequest } from '../hooks';
+import { useAuth } from 'src/utils/auth';
+import { useFetchRequest } from 'src/hooks';
 
 export function UserDetailPage() {
   const { user } = useAuth();

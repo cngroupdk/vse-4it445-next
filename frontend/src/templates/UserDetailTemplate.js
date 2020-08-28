@@ -10,9 +10,9 @@ import {
   Loading,
   MainSection,
   TransparentButton,
-} from '../atoms/';
-import { QuackForm } from '../molecules/';
-import { QuackList, TopNavigation } from '../organisms/';
+} from 'src/atoms/';
+import { QuackForm } from 'src/molecules/';
+import { QuackList, TopNavigation } from 'src/organisms/';
 
 export function UserDetailTemplate({
   screenName,

@@ -4,8 +4,8 @@ import * as yup from 'yup';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { Button, ErrorBanner } from '../atoms/';
-import { FormikField } from '../molecules/';
+import { Button, ErrorBanner } from 'src/atoms/';
+import { FormikField } from 'src/molecules/';
 
 const initialValues = {
   email: '',

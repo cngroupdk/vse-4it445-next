@@ -1,8 +1,8 @@
 import { useCallback, useEffect, useRef } from 'react';
 import { CancelToken } from 'axios';
 
-import { useApi } from '../utils/api';
-import { config } from '../config';
+import { useApi } from 'src/utils/api';
+import { config } from 'src/config';
 import { usePromise } from './usePromise';
 import { useUpdatingRef } from './useUpdatingRef';
 

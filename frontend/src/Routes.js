@@ -8,6 +8,14 @@ import { SignInPage } from './pages/SignInPage';
 import { SignUpPage } from './pages/SignUpPage';
 import { UserDetailPage } from './pages/UserDetailPage';
 
+export const route = {
+  home: () => `/`,
+  about: () => `/about`,
+  signIn: () => `/auth/signin`,
+  signUp: () => `/auth/signup`,
+  userDetail: (screenName) => `/${screenName}`,
+};
+
 export function Routes() {
   return (
     <Switch>

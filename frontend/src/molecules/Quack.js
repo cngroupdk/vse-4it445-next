@@ -1,7 +1,8 @@
 import React from 'react';
 
-import { AvatarPhoto, Link, UserName, UserScreenName } from '../atoms/';
-import { formatDate } from '../utils/date';
+import { AvatarPhoto, Link, UserName, UserScreenName } from 'src/atoms/';
+import { formatDate } from 'src/utils/date';
+import { route } from 'src/Routes';
 
 export function Quack({ quack }) {
   const {
@@ -10,7 +11,7 @@ export function Quack({ quack }) {
     createdAt,
   } = quack;
 
-  const linkToUser = `/${screenName}`;
+  const linkToUser = route.userDetail(screenName);
 
   return (
     <article className="flex w-100 bb b--black-10 pb2 mt2">

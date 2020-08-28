@@ -1,7 +1,7 @@
 import React from 'react';
 
-import { MainSection, Heading } from '../atoms';
-import { TopNavigation } from '../organisms';
+import { MainSection, Heading } from 'src/atoms';
+import { TopNavigation } from 'src/organisms';
 
 export function AboutTemplate() {
   return (
