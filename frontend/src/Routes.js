@@ -19,11 +19,15 @@ export const route = {
 export function Routes() {
   return (
     <Switch>
-      <Route path="/" exact component={HomePage} />
-      <Route path="/about" exact component={AboutPage} />
-      <Route path="/auth/signin" exact component={SignInPage} />
-      <Route path="/auth/signup" exact component={SignUpPage} />
-      <Route path="/:screenName" exact component={UserDetailPage} />
+      <Route path={route.home()} exact component={HomePage} />
+      <Route path={route.about()} exact component={AboutPage} />
+      <Route path={route.signIn()} exact component={SignInPage} />
+      <Route path={route.signUp()} exact component={SignUpPage} />
+      <Route
+        path={route.userDetail(':screenName')}
+        exact
+        component={UserDetailPage}
+      />
       <Route path="*" component={PageNotFound} />
     </Switch>
   );
