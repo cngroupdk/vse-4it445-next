@@ -22,14 +22,18 @@ export function HomeTemplate({
 
         {quacksState.data && (
           <TransparentButton className="fr" onClick={() => refetchQuacks()}>
-            <FontAwesomeIcon icon={faSyncAlt} spin={quacksState.isLoading} />{' '}
+            <FontAwesomeIcon
+              icon={faSyncAlt}
+              spin={quacksState.loading}
+              className="pr2"
+            />
             Refresh
           </TransparentButton>
         )}
 
         <QuackList
           quacks={quacksState.data && quacksState.data.quacks}
-          isLoading={quacksState.isLoading}
+          isLoading={quacksState.loading}
           error={quacksState.error}
           refetch={refetchQuacks}
         />

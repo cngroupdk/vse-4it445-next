@@ -21,7 +21,7 @@ export function UserDetailTemplate({
   quackFormState,
   currentUser,
 }) {
-  const { data, isLoading, error } = userFetcher;
+  const { data, loading, error } = userFetcher;
   const showQuackForm =
     quackFormState && currentUser && currentUser.screenName === screenName;
 
@@ -29,7 +29,7 @@ export function UserDetailTemplate({
     <>
       <TopNavigation />
       <MainSection>
-        {isLoading && !data && <Loading />}
+        {loading && !data && <Loading />}
 
         {error && (
           <ErrorBanner title={error.message}>
@@ -57,7 +57,7 @@ export function UserDetailTemplate({
             {showQuackForm && <QuackForm {...quackFormState} />}
 
             <TransparentButton className="fr" onClick={onReload}>
-              <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} /> Reload
+              <FontAwesomeIcon icon={faSyncAlt} spin={loading} /> Reload
             </TransparentButton>
 
             <QuackList quacks={data.user.quacks} />
