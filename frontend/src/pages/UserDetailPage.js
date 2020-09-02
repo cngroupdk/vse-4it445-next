@@ -1,23 +1,39 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { gql, useQuery } from '@apollo/client';
 
 import { UserDetailTemplate } from 'src/templates/UserDetailTemplate';
 import { PageNotFound } from './PageNotFound';
 import { useAuth } from 'src/utils/auth';
-import { useFetchRequest } from 'src/hooks';
+
+const USER_DETAIL_QUERY = gql`
+  query UserDetail($screenName: String!) {
+    user(screenName: $screenName) {
+      id
+      name
+      screenName
+      profileImageUrl
+      quacks {
+        id
+        createdAt
+        text
+        user {
+          id
+          name
+          screenName
+          profileImageUrl
+        }
+      }
+    }
+  }
+`;
 
 export function UserDetailPage() {
   const { user } = useAuth();
   const { screenName } = useParams();
-  const url = `/v1/user/${screenName}`;
-  const [userFetcher, refetchUser] = useFetchRequest({
-    lazy: true,
-    url,
+  const userFetcher = useQuery(USER_DETAIL_QUERY, {
+    variables: { screenName },
   });
-
-  useEffect(() => {
-    refetchUser({ url });
-  }, [refetchUser, url]);
 
   const [quackFormText, setQuackFormText] = useState('');
   const submitQuack = ({ text }) => {
@@ -31,15 +47,14 @@ export function UserDetailPage() {
     onSubmit: submitQuack,
   };
 
-  const { error } = userFetcher;
-  if (error && error.response && error.response.status === 404) {
+  if (userFetcher.data && userFetcher.data.user === null) {
     return <PageNotFound />;
   }
 
   return (
     <UserDetailTemplate
       userFetcher={userFetcher}
-      onReload={() => refetchUser()}
+      onReload={() => userFetcher.refetch()}
       quackFormState={quackFormState}
       currentUser={user}
       screenName={screenName}

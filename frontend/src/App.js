@@ -1,20 +1,21 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
+import { ApolloProvider } from '@apollo/client';
 
 import { ScrollToTop } from 'src/atoms/';
-import { ApiProvider } from 'src/utils/api';
 import { AuthProvider } from 'src/utils/auth';
 import { Routes } from 'src/Routes';
+import { client } from 'src/utils/apolloClient';
 
 export function App() {
   return (
-    <AuthProvider>
-      <ApiProvider>
+    <ApolloProvider client={client}>
+      <AuthProvider>
         <BrowserRouter>
           <ScrollToTop />
           <Routes />
         </BrowserRouter>
-      </ApiProvider>
-    </AuthProvider>
+      </AuthProvider>
+    </ApolloProvider>
   );
 }

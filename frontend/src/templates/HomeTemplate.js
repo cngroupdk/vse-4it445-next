@@ -1,9 +1,7 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { Heading, MainSection, TransparentButton } from 'src/atoms/';
-import { QuackForm } from 'src/molecules/';
+import { Heading, MainSection } from 'src/atoms/';
+import { QuackForm, ReloadButton } from 'src/molecules/';
 import { QuackList, TopNavigation } from 'src/organisms/';
 
 export function HomeTemplate({
@@ -21,15 +19,16 @@ export function HomeTemplate({
         {currentUser && <QuackForm {...quackFormState} />}
 
         {quacksState.data && (
-          <TransparentButton className="fr" onClick={() => refetchQuacks()}>
-            <FontAwesomeIcon icon={faSyncAlt} spin={quacksState.isLoading} />{' '}
-            Refresh
-          </TransparentButton>
+          <ReloadButton
+            isLoading={quacksState.loading}
+            onClick={() => refetchQuacks()}
+            className="fr"
+          />
         )}
 
         <QuackList
           quacks={quacksState.data && quacksState.data.quacks}
-          isLoading={quacksState.isLoading}
+          isLoading={quacksState.loading}
           error={quacksState.error}
           refetch={refetchQuacks}
         />

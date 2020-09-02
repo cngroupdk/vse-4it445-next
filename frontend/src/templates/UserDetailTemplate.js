@@ -1,6 +1,4 @@
 import React from 'react';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 
 import {
   AvatarPhoto,
@@ -9,9 +7,8 @@ import {
   Heading,
   Loading,
   MainSection,
-  TransparentButton,
 } from 'src/atoms/';
-import { QuackForm } from 'src/molecules/';
+import { QuackForm, ReloadButton } from 'src/molecules/';
 import { QuackList, TopNavigation } from 'src/organisms/';
 
 export function UserDetailTemplate({
@@ -21,7 +18,7 @@ export function UserDetailTemplate({
   quackFormState,
   currentUser,
 }) {
-  const { data, isLoading, error } = userFetcher;
+  const { data, loading, error } = userFetcher;
   const showQuackForm =
     quackFormState && currentUser && currentUser.screenName === screenName;
 
@@ -29,7 +26,7 @@ export function UserDetailTemplate({
     <>
       <TopNavigation />
       <MainSection>
-        {isLoading && !data && <Loading />}
+        {loading && !data && <Loading />}
 
         {error && (
           <ErrorBanner title={error.message}>
@@ -56,9 +53,11 @@ export function UserDetailTemplate({
 
             {showQuackForm && <QuackForm {...quackFormState} />}
 
-            <TransparentButton className="fr" onClick={onReload}>
-              <FontAwesomeIcon icon={faSyncAlt} spin={isLoading} /> Reload
-            </TransparentButton>
+            <ReloadButton
+              onClick={onReload}
+              isLoading={loading}
+              className="fr"
+            />
 
             <QuackList quacks={data.user.quacks} />
           </>

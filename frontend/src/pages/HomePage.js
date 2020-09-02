@@ -1,16 +1,28 @@
 import React, { useState } from 'react';
+import { useQuery, gql } from '@apollo/client';
 
 import { HomeTemplate } from 'src/templates/HomeTemplate';
-import { useFetchRequest } from 'src/hooks';
 import { useAuth } from 'src/utils/auth';
+
+const QUACKS_QUERY = gql`
+  query Quacks {
+    quacks {
+      id
+      createdAt
+      user {
+        id
+        name
+        screenName
+        profileImageUrl
+      }
+      text
+    }
+  }
+`;
 
 export function HomePage() {
   const { user } = useAuth();
-
-  const [quacksState, requestQuacks] = useFetchRequest({
-    url: '/v1/timeline',
-    params: { limit: 20 },
-  });
+  const quacksState = useQuery(QUACKS_QUERY);
 
   const [quackFormText, setQuackFormText] = useState('');
   const submitQuack = ({ text }) => {
@@ -27,7 +39,7 @@ export function HomePage() {
   return (
     <HomeTemplate
       quacksState={quacksState}
-      refetchQuacks={() => requestQuacks({ params: { page: 1 } })}
+      refetchQuacks={() => quacksState.refetch()}
       quackFormState={quackFormState}
       currentUser={user}
     />

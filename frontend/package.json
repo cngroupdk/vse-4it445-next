@@ -11,15 +11,15 @@
     "prettier": "prettier --write \"src/**/*.js\" README.md"
   },
   "dependencies": {
+    "@apollo/client": "^3.1.4",
     "@fortawesome/fontawesome-svg-core": "1.2.30",
     "@fortawesome/free-regular-svg-icons": "5.14.0",
     "@fortawesome/free-solid-svg-icons": "5.14.0",
     "@fortawesome/react-fontawesome": "0.1.11",
-    "axios": "0.20.0",
-    "axios-mock-adapter": "1.18.2",
     "classnames": "2.2.6",
-    "date-fns": "2.16.0",
+    "date-fns": "2.16.1",
     "formik": "2.1.5",
+    "graphql": "^15.3.0",
     "lodash": "4.17.20",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
