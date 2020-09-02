@@ -51,15 +51,18 @@ const typeDefs = gql`
 `;
 
 // TODO - just a mock before db implementation
+
+const MOCK_DATA_DELAY = 300;
+
 const resolvers = {
   Query: {
     users: async () => {
-      await sleep(300);
+      await sleep(MOCK_DATA_DELAY);
 
       return users;
     },
     user: async (_, { screenName }) => {
-      await sleep(300);
+      await sleep(MOCK_DATA_DELAY);
 
       const foundUser = users.find((user) => user.screenName === screenName);
 
@@ -78,7 +81,7 @@ const resolvers = {
       };
     },
     quacks: async () => {
-      await sleep(300);
+      await sleep(MOCK_DATA_DELAY);
 
       return quacks.map((quack) => ({
         ...quack,
@@ -88,7 +91,7 @@ const resolvers = {
   },
   Mutation: {
     signin: async () => {
-      await sleep(300);
+      await sleep(MOCK_DATA_DELAY);
 
       return {
         user: users[0],
@@ -96,7 +99,7 @@ const resolvers = {
       };
     },
     signup: async (_, { email }) => {
-      await sleep(300);
+      await sleep(MOCK_DATA_DELAY);
 
       return {
         email,

@@ -6,7 +6,8 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "dev": "backpack"
+    "dev": "backpack",
+    "prettier": "prettier --write \"src/**/*.js\" README.md"
   },
   "dependencies": {
     "apollo-server-express": "^2.17.0",
