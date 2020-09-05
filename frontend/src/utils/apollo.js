@@ -27,6 +27,7 @@ export function EnhancedAppoloProvider({ children }) {
   const handleSignout = useCallback(() => {
     signout();
     history.push(route.signIn());
+    window.location.reload();
   }, [signout, history]);
 
   const authLink = new ApolloLink((operation, forward) => {
