@@ -16,6 +16,17 @@ import { route } from 'src/Routes';
 
 const UNAUTHENTICATED_CODE = 'UNAUTHENTICATED';
 
+const hasUnauthenticatedErrorCode = (errors) => {
+  return !!(
+    errors &&
+    errors.some((error) => error.extensions.code === UNAUTHENTICATED_CODE)
+  );
+};
+
+const hasNetworkStatusCode = (error, code) => {
+  return !!(error && error.statusCode === code);
+};
+
 const httpLink = createHttpLink({
   uri: config.GRAPHQL_API,
 });
@@ -41,15 +52,10 @@ export function EnhancedAppoloProvider({ children }) {
   });
 
   const logoutLink = onError(({ graphQLErrors, networkError }) => {
-    if (graphQLErrors) {
-      graphQLErrors.forEach(({ extensions }) => {
-        if (extensions.code === UNAUTHENTICATED_CODE) {
-          handleSignout();
-        }
-      });
-    }
-
-    if (networkError && networkError.statusCode === 401) {
+    if (
+      hasUnauthenticatedErrorCode(graphQLErrors) ||
+      hasNetworkStatusCode(networkError, 401)
+    ) {
       handleSignout();
     }
   });
