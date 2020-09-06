@@ -17,14 +17,14 @@ import { route } from 'src/Routes';
 const UNAUTHENTICATED_CODE = 'UNAUTHENTICATED';
 
 const hasUnauthenticatedErrorCode = (errors) => {
-  return !!(
+  return (
     errors &&
     errors.some((error) => error.extensions.code === UNAUTHENTICATED_CODE)
   );
 };
 
 const hasNetworkStatusCode = (error, code) => {
-  return !!(error && error.statusCode === code);
+  return error && error.statusCode === code;
 };
 
 const httpLink = createHttpLink({
