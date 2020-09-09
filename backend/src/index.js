@@ -3,6 +3,8 @@ import express from 'express';
 import cors from 'cors';
 import { ApolloServer, gql } from 'apollo-server-express';
 
+import { createToken } from './libs/token';
+
 import { quacks, users } from './__mocks__/mocks';
 
 dotenv.config();
@@ -92,10 +94,12 @@ const resolvers = {
   Mutation: {
     signin: async () => {
       await sleep(MOCK_DATA_DELAY);
+      const user = users[0];
+      const token = createToken(user);
 
       return {
-        user: users[0],
-        token: 'someJWTtoken',
+        user,
+        token,
       };
     },
     signup: async (_, { email }) => {
