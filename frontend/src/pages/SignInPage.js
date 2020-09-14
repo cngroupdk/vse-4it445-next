@@ -11,7 +11,7 @@ const SIGNIN_MUTATION = gql`
       user {
         id
         name
-        screenName
+        username
         profileImageUrl
       }
       token

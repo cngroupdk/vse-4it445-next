@@ -13,4 +13,4 @@ export { TextArea } from './TextArea';
 export { TextInput } from './TextInput';
 export { TransparentButton } from './TransparentButton';
 export { UserName } from './UserName';
-export { UserScreenName } from './UserScreenName';
+export { UserUsername } from './UserUsername';

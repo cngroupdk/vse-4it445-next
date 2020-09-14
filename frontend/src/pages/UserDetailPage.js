@@ -7,11 +7,11 @@ import { PageNotFound } from './PageNotFound';
 import { useAuth } from 'src/utils/auth';
 
 const USER_DETAIL_QUERY = gql`
-  query UserDetail($screenName: String!) {
-    user(screenName: $screenName) {
+  query UserDetail($username: String!) {
+    user(username: $username) {
       id
       name
-      screenName
+      username
       profileImageUrl
       quacks {
         id
@@ -20,7 +20,7 @@ const USER_DETAIL_QUERY = gql`
         user {
           id
           name
-          screenName
+          username
           profileImageUrl
         }
       }
@@ -30,9 +30,9 @@ const USER_DETAIL_QUERY = gql`
 
 export function UserDetailPage() {
   const { user } = useAuth();
-  const { screenName } = useParams();
+  const { username } = useParams();
   const userFetcher = useQuery(USER_DETAIL_QUERY, {
-    variables: { screenName },
+    variables: { username },
   });
 
   const [quackFormText, setQuackFormText] = useState('');
@@ -57,7 +57,7 @@ export function UserDetailPage() {
       onReload={() => userFetcher.refetch()}
       quackFormState={quackFormState}
       currentUser={user}
-      screenName={screenName}
+      username={username}
     />
   );
 }

@@ -8,14 +8,13 @@ export const signin = async (_, { email, password }, { dbConnection }) => {
   );
   const user = dbResponse[0];
   if (await argon2.verify(user.password, password)) {
-
     const token = createToken({ id: user.id });
     return {
       user: { ...user },
       token,
     };
   }
-}
+};
 
 export const signup = async (
   _,
@@ -28,20 +27,18 @@ export const signup = async (
     ])
   )[0];
 
-  console.log('userByUsername', userByUsername)
+  console.log('userByUsername', userByUsername);
 
-  if(userByUsername) {
-    throw new Error('UsernameAlreadyTaken');
+  if (userByUsername) {
+    throw new Error('Username already taken');
   }
 
   const userByEmail = (
-    await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [
-      email,
-    ])
+    await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [email])
   )[0];
 
-  if(userByEmail) {
-    throw new Error('EmailAlreadyRegistered');
+  if (userByEmail) {
+    throw new Error('Email already registered');
   }
 
   const passwordHash = await argon2.hash(password);
@@ -63,4 +60,4 @@ export const signup = async (
   };
 
   return { user: userObject, token: token };
-}
+};

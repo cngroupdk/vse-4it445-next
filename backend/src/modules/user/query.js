@@ -1,8 +1,7 @@
-
 export const users = async (_, __, { dbConnection }) => {
   const users = await dbConnection.query('SELECT * FROM user');
   return users;
-}
+};
 
 export const user = async (_, { username }, { dbConnection }) => {
   const user = (
@@ -14,4 +13,4 @@ export const user = async (_, { username }, { dbConnection }) => {
     return null;
   }
   return user;
-}
+};

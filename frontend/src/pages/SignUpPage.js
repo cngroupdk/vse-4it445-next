@@ -1,29 +1,45 @@
 import React, { useCallback } from 'react';
+import { useHistory } from 'react-router-dom';
 import { gql, useMutation } from '@apollo/client';
 
 import { SignUpTemplate } from 'src/templates/SignUpTemplate';
+import { useAuth } from 'src/utils/auth';
 
 const SIGNUP_MUTATION = gql`
   mutation SignUp(
     $email: String!
+    $name: String!
     $password: String!
     $passwordConfirmation: String!
+    $username: String!
   ) {
     signup(
       email: $email
+      name: $name
       password: $password
       passwordConfirmation: $passwordConfirmation
+      username: $username
     ) {
-      email
+      user {
+        id
+        name
+        username
+        profileImageUrl
+      }
+      token
     }
   }
 `;
 
 export function SignUpPage() {
+  const auth = useAuth();
+  const history = useHistory();
   const [signupRequest, signupRequestState] = useMutation(SIGNUP_MUTATION, {
-    onCompleted: ({ signup: { email } }) => {
-      console.log(email);
+    onCompleted: ({ signup: { user, token } }) => {
+      auth.signin({ token, user });
+      history.replace('/');
     },
+    onError: () => {},
   });
 
   const handleSignUpFormSubmit = useCallback(

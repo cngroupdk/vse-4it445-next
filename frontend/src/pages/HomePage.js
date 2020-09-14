@@ -12,7 +12,7 @@ const QUACKS_QUERY = gql`
       user {
         id
         name
-        screenName
+        username
         profileImageUrl
       }
       text

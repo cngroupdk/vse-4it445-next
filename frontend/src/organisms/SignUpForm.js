@@ -9,18 +9,22 @@ import { FormikField } from 'src/molecules/';
 
 const initialValues = {
   email: '',
+  name: '',
   password: '',
   passwordConfirmation: '',
+  username: '',
 };
 
 const schema = yup.object().shape({
   email: yup.string().email().required().label('Email'),
+  name: yup.string().required().label('Name'),
   password: yup.string().required().label('Password'),
   passwordConfirmation: yup
     .string()
     .required()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
     .label('Password Confirmation'),
+  username: yup.string().required().label('Username'),
 });
 
 export function SignUpForm({
@@ -40,12 +44,30 @@ export function SignUpForm({
       <Form className={className}>
         {errorMessage && <ErrorBanner title={errorMessage} className="mb3" />}
         <FormikField
+          id="name"
+          name="name"
+          label="Name"
+          type="text"
+          autoFocus="autofocus"
+          autoComplete="on"
+          autoCorrect="off"
+          autoCapitalize="off"
+        />
+        <FormikField
+          id="username"
+          name="username"
+          label="Username"
+          type="text"
+          autoComplete="on"
+          autoCorrect="off"
+          autoCapitalize="off"
+        />
+        <FormikField
           id="email"
           name="email"
           label="Email"
           type="text"
           placeholder="e.g. john@doe.com"
-          autoFocus="autofocus"
           autoComplete="on"
           autoCorrect="off"
           autoCapitalize="off"

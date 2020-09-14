@@ -49,9 +49,9 @@ const typeDefs = gql`
     signup(
       email: String!
       password: String!
+      passwordConfirmation: String
       name: String!
       username: String!
-      profileImageUrl: String
     ): SignUp!
     addQuack(userId: Int!, text: String!): Quack!
   }
@@ -59,7 +59,7 @@ const typeDefs = gql`
 
 const main = async () => {
   const app = express();
-  
+
   app.disable('x-powered-by');
   app.use(cors());
   const dbConnection = await getConnection();
@@ -68,7 +68,7 @@ const main = async () => {
     resolvers: process.env.MOCKS === 'true' ? mockResolver : rootResolver,
     context: async ({ req, res }) => {
       const auth = req.headers.Authorization || '';
-  
+
       return {
         req,
         res,
@@ -78,14 +78,14 @@ const main = async () => {
     },
     playground: true,
   });
-  
+
   apolloServer.applyMiddleware({ app, cors: false });
-  
+
   const port = process.env.PORT || 4000;
-  
+
   app.listen(port, () => {
     console.info(`Server started at http://localhost:${port}/graphql`);
   });
-}
+};
 
 main();
