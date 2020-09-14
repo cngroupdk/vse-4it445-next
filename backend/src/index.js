@@ -12,20 +12,20 @@ dotenv.config();
 
 const typeDefs = gql`
   type User {
-    id: Int
+    id: Int!
     email: String!
-    name: String
-    screenName: String
+    name: String!
+    username: String!
     profileImageUrl: String
     quacks: [Quack!]!
   }
 
   type Quack {
-    id: Int
-    createdAt: String
+    id: Int!
+    createdAt: String!
     user: User!
     userId: Int!
-    text: String
+    text: String!
   }
 
   type SignIn {
@@ -40,7 +40,7 @@ const typeDefs = gql`
 
   type Query {
     users: [User!]!
-    user(screenName: String!): User
+    user(username: String!): User
     quacks: [Quack!]!
   }
 
@@ -49,8 +49,8 @@ const typeDefs = gql`
     signup(
       email: String!
       password: String!
-      name: String
-      screenName: String
+      name: String!
+      username: String!
       profileImageUrl: String
     ): SignUp!
   }

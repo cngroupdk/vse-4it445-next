@@ -1,3 +1,4 @@
+import { createToken } from '../libs/token';
 import { users, quacks } from './mocks';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -10,10 +11,10 @@ export default {
 
       return users;
     },
-    user: async (_, { screenName }) => {
+    user: async (_, { username }) => {
       await sleep(MOCK_DATA_DELAY);
 
-      const foundUser = users.find((user) => user.screenName === screenName);
+      const foundUser = users.find((user) => user.username === username);
 
       if (!foundUser) {
         return null;

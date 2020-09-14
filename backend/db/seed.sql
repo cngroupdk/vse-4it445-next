@@ -1,5 +1,3 @@
-use quacker;
-
 CREATE TABLE `quack` (
   `id` int(11) NOT NULL,
   `createdAt` text COLLATE utf8_bin,
@@ -18,11 +16,11 @@ CREATE TABLE `user` (
   `email` text COLLATE utf8_bin NOT NULL,
   `password` text COLLATE utf8_bin NOT NULL,
   `name` text COLLATE utf8_bin NOT NULL,
-  `screenName` text COLLATE utf8_bin NOT NULL,
+  `username` text COLLATE utf8_bin NOT NULL,
   `profileImageUrl` text COLLATE utf8_bin NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
-INSERT INTO `user` (`id`, `name`, `email`, `password`, `screenName`, `profileImageUrl`) VALUES
+INSERT INTO `user` (`id`, `name`, `email`, `password`, `username`, `profileImageUrl`) VALUES
 (1, 'Young Gatchell', 'yg123@quacker.cz', 'notHashedPassword1', 'yg123', 'http://mrmrs.github.io/photos/p/1.jpg'),
 (2, 'Gatchell Young', 'gyoung@quacker.cz', 'notHashedPassword2', 'gyoung', 'http://mrmrs.github.io/photos/p/2.jpg'),
 (3, 'Mitchel Old', 'oldmit@quacker.cz', 'notHashedPassword3', 'oldmit', 'http://mrmrs.github.io/photos/p/3.jpg');

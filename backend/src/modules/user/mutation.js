@@ -6,11 +6,12 @@ export const signin = async (_, { email, password }, { dbConnection }) => {
     `SELECT * FROM user WHERE email = ?`,
     [email],
   );
-  if (await argon2.verify(dbResponse[0].password, password)) {
+  const user = dbResponse[0];
+  if (await argon2.verify(user.password, password)) {
 
-    const token = createToken({ id: dbResponse[0].id });
+    const token = createToken({ id: user.id });
     return {
-      user: { ...dbResponse[0] },
+      user: { ...user },
       token,
     };
   }
@@ -18,15 +19,37 @@ export const signin = async (_, { email, password }, { dbConnection }) => {
 
 export const signup = async (
   _,
-  { email, password, name, screenName, profileImageUrl },
+  { email, password, name, username, profileImageUrl },
   { dbConnection },
 ) => {
+  const userByUsername = (
+    await dbConnection.query(`SELECT * FROM user WHERE username = ?`, [
+      username,
+    ])
+  )[0];
+
+  console.log('userByUsername', userByUsername)
+
+  if(userByUsername) {
+    throw new Error('UsernameAlreadyTaken');
+  }
+
+  const userByEmail = (
+    await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [
+      email,
+    ])
+  )[0];
+
+  if(userByEmail) {
+    throw new Error('EmailAlreadyRegistered');
+  }
+
   const passwordHash = await argon2.hash(password);
 
   const dbResponse = await dbConnection.query(
-    `INSERT INTO user (id, email, password, name, screenName, profileImageUrl) 
+    `INSERT INTO user (id, email, password, name, username, profileImageUrl) 
     VALUES (NULL, ?, ?, ?, ?, ?);`,
-    [email, passwordHash, name, screenName, profileImageUrl],
+    [email, passwordHash, name, username, profileImageUrl],
   );
 
   const token = createToken({ id: dbResponse.insertId });
@@ -35,7 +58,7 @@ export const signup = async (
     id: dbResponse.insertId,
     email,
     name: name,
-    screenName: screenName,
+    username: username,
     profileImageUrl: profileImageUrl,
   };
 

@@ -2,13 +2,13 @@ export const users = [
   {
     id: 1,
     name: 'Young Gatchell',
-    screenName: 'yg123',
+    username: 'yg123',
     profileImageUrl: 'http://mrmrs.github.io/photos/p/1.jpg',
   },
   {
     id: 2,
     name: 'Gatchell Young ',
-    screenName: 'gyoung',
+    username: 'gyoung',
     profileImageUrl: 'http://mrmrs.github.io/photos/p/2.jpg',
   },
 ];
