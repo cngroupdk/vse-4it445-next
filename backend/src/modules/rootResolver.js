@@ -1,5 +1,6 @@
 import {
-  queries as QuackQueries
+  queries as QuackQueries,
+  mutations as QuackMutations,
 } from './quack';
 import {
   queries as UserQueries,
@@ -12,6 +13,7 @@ export default {
     ...UserQueries,
   },
   Mutation: {
+    ...QuackMutations,
     ...UserMutations,
   },
   User: {

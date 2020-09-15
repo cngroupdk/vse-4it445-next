@@ -1,8 +1,9 @@
 import mariadb from 'mariadb';
 
 export const getConnection = async () => {
-  let conn;
   try {
+  let conn;
+  if(!conn) {
     conn = await mariadb.createConnection(
       {
         host: process.env.DB_HOST,
@@ -12,6 +13,7 @@ export const getConnection = async () => {
         database: process.env.DB_NAME,
       }
     );
+  }
     return conn;
   } catch (err) {
     console.log('err', err);

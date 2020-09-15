@@ -53,33 +53,39 @@ const typeDefs = gql`
       username: String!
       profileImageUrl: String
     ): SignUp!
+    addQuack(userId: Int!, text: String!): Quack!
   }
 `;
 
-const app = express();
+const main = async () => {
+  const app = express();
+  
+  app.disable('x-powered-by');
+  app.use(cors());
+  const dbConnection = await getConnection();
+  const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers: process.env.MOCKS === 'true' ? mockResolver : rootResolver,
+    context: async ({ req, res }) => {
+      const auth = req.headers.Authorization || '';
+  
+      return {
+        req,
+        res,
+        dbConnection,
+        auth,
+      };
+    },
+    playground: true,
+  });
+  
+  apolloServer.applyMiddleware({ app, cors: false });
+  
+  const port = process.env.PORT || 4000;
+  
+  app.listen(port, () => {
+    console.info(`Server started at http://localhost:${port}/graphql`);
+  });
+}
 
-app.disable('x-powered-by');
-app.use(cors());
-const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers: process.env.MOCKS === 'true' ? mockResolver : rootResolver,
-  context: async ({ req, res }) => {
-    const auth = req.headers.Authorization || '';
-
-    return {
-      req,
-      res,
-      dbConnection: await getConnection(),
-      auth,
-    };
-  },
-  playground: true,
-});
-
-apolloServer.applyMiddleware({ app, cors: false });
-
-const port = process.env.PORT || 4000;
-
-app.listen(port, () => {
-  console.info(`Server started at http://localhost:${port}/graphql`);
-});
+main();

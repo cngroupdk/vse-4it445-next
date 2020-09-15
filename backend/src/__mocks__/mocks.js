@@ -3,12 +3,14 @@ export const users = [
     id: 1,
     name: 'Young Gatchell',
     username: 'yg123',
+    email: "yg123@quacker.se",
     profileImageUrl: 'http://mrmrs.github.io/photos/p/1.jpg',
   },
   {
     id: 2,
     name: 'Gatchell Young ',
     username: 'gyoung',
+    email: "gyoung@quacker.se",
     profileImageUrl: 'http://mrmrs.github.io/photos/p/2.jpg',
   },
 ];

@@ -3,6 +3,7 @@ import { users, quacks } from './mocks';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const MOCK_DATA_DELAY = 300;
+let localQuacks = quacks;
 
 export default {
   Query: {
@@ -32,8 +33,7 @@ export default {
     },
     quacks: async () => {
       await sleep(MOCK_DATA_DELAY);
-
-      return quacks.map((quack) => ({
+      return localQuacks.map((quack) => ({
         ...quack,
         user: users.find((user) => quack.userId === user.id),
       }));
@@ -57,5 +57,24 @@ export default {
         email,
       };
     },
+    addQuack: async (
+      _,
+      { userId, text }
+    ) => {
+
+      const id = quacks[quacks.length - 1].id + 1;
+    
+      const quack = {
+        id,
+        createdAt: (new Date).toISOString(),
+        userId,
+        text,
+      }
+
+      localQuacks.push(quack)
+    
+      return quack
+    }
+    
   },
 };
