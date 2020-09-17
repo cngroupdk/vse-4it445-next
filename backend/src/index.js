@@ -3,28 +3,29 @@ import express from 'express';
 import cors from 'cors';
 import { ApolloServer, gql } from 'apollo-server-express';
 
-import { createToken } from './libs/token';
+import { getConnection } from './libs/connection';
 
-import { quacks, users } from './__mocks__/mocks';
+import rootResolver from './modules/rootResolver';
+import mockResolver from './__mocks__/mockResolver';
 
 dotenv.config();
 
-// TODO - just a mock before db implementation
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const typeDefs = gql`
   type User {
-    id: Int
-    name: String
-    screenName: String
+    id: Int!
+    email: String!
+    name: String!
+    username: String!
     profileImageUrl: String
     quacks: [Quack!]!
   }
 
   type Quack {
-    id: Int
-    createdAt: String
+    id: Int!
+    createdAt: String!
     user: User!
-    text: String
+    userId: Int!
+    text: String!
   }
 
   type SignIn {
@@ -33,12 +34,13 @@ const typeDefs = gql`
   }
 
   type SignUp {
-    email: String!
+    user: User!
+    token: String!
   }
 
   type Query {
     users: [User!]!
-    user(screenName: String!): User
+    user(username: String!): User
     quacks: [Quack!]!
   }
 
@@ -47,87 +49,43 @@ const typeDefs = gql`
     signup(
       email: String!
       password: String!
-      passwordConfirmation: String!
+      name: String!
+      username: String!
+      profileImageUrl: String
     ): SignUp!
+    addQuack(userId: Int!, text: String!): Quack!
   }
 `;
 
-// TODO - just a mock before db implementation
-
-const MOCK_DATA_DELAY = 300;
-
-const resolvers = {
-  Query: {
-    users: async () => {
-      await sleep(MOCK_DATA_DELAY);
-
-      return users;
-    },
-    user: async (_, { screenName }) => {
-      await sleep(MOCK_DATA_DELAY);
-
-      const foundUser = users.find((user) => user.screenName === screenName);
-
-      if (!foundUser) {
-        return null;
-      }
-
+const main = async () => {
+  const app = express();
+  
+  app.disable('x-powered-by');
+  app.use(cors());
+  const dbConnection = await getConnection();
+  const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers: process.env.MOCKS === 'true' ? mockResolver : rootResolver,
+    context: async ({ req, res }) => {
+      const auth = req.headers.Authorization || '';
+  
       return {
-        ...foundUser,
-        quacks: quacks
-          .filter((quack) => quack.userId === foundUser.id)
-          .map((quack) => ({
-            ...quack,
-            user: foundUser,
-          })),
+        req,
+        res,
+        dbConnection,
+        auth,
       };
     },
-    quacks: async () => {
-      await sleep(MOCK_DATA_DELAY);
+    playground: true,
+  });
+  
+  apolloServer.applyMiddleware({ app, cors: false });
+  
+  const port = process.env.PORT || 4000;
+  
+  app.listen(port, () => {
+    console.info(`Server started at http://localhost:${port}/graphql`);
+  });
+}
 
-      return quacks.map((quack) => ({
-        ...quack,
-        user: users.find((user) => quack.userId === user.id),
-      }));
-    },
-  },
-  Mutation: {
-    signin: async () => {
-      await sleep(MOCK_DATA_DELAY);
-      const user = users[0];
-      const token = createToken(user);
-
-      return {
-        user,
-        token,
-      };
-    },
-    signup: async (_, { email }) => {
-      await sleep(MOCK_DATA_DELAY);
-
-      return {
-        email,
-      };
-    },
-  },
-};
-
-const app = express();
-
-app.disable('x-powered-by');
-app.use(cors());
-
-const apolloServer = new ApolloServer({
-  typeDefs,
-  resolvers,
-  context: ({ req, res }) => ({ req, res }),
-  playground: true,
-});
-
-apolloServer.applyMiddleware({ app, cors: false });
-
-const port = process.env.PORT || 4000;
-
-app.listen(port, () => {
-  console.info(`Server started at http://localhost:${port}/graphql`);
-});
+main();
