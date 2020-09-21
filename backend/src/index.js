@@ -52,6 +52,7 @@ const typeDefs = gql`
       passwordConfirmation: String
       name: String!
       username: String!
+      profileImageUrl: String
     ): SignUp!
     addQuack(userId: Int!, text: String!): Quack!
   }

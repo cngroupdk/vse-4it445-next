@@ -13,12 +13,13 @@ import { QuackList, TopNavigation } from 'src/organisms/';
 
 export function UserDetailTemplate({
   username,
-  userFetcher,
+  data,
+  loading,
+  error,
   onReload,
   quackFormState,
   currentUser,
 }) {
-  const { data, loading, error } = userFetcher;
   const showQuackForm =
     quackFormState && currentUser && currentUser.username === username;
 

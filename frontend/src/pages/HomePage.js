@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
+import { useHistory } from 'react-router-dom';
+import { useMutation, useQuery, gql } from '@apollo/client';
 
 import { HomeTemplate } from 'src/templates/HomeTemplate';
 import { useAuth } from 'src/utils/auth';
@@ -20,14 +21,31 @@ const QUACKS_QUERY = gql`
   }
 `;
 
+const QUACK_MUTATION = gql`
+  mutation Quack($userId: Int!, $text: String!) {
+    addQuack(userId: $userId, text: $text)
+  }
+`;
+
 export function HomePage() {
   const { user } = useAuth();
+  const history = useHistory();
+
   const quacksState = useQuery(QUACKS_QUERY);
+
+  const [quackMutationRequest, quackMutationRequestState] = useMutation(
+    QUACK_MUTATION,
+    {
+      onCompleted: () => {
+        history.go(0);
+      },
+    },
+  );
 
   const [quackFormText, setQuackFormText] = useState('');
   const submitQuack = ({ text }) => {
-    console.log('quack:', text);
     setQuackFormText('');
+    quackMutationRequest({ variables: { text, userId: user.id } });
   };
 
   const quackFormState = {
@@ -38,7 +56,9 @@ export function HomePage() {
 
   return (
     <HomeTemplate
-      quacksState={quacksState}
+      data={quacksState.data}
+      error={quacksState.error || quackMutationRequestState.error}
+      loading={quacksState.loading || quackMutationRequestState.loading}
       refetchQuacks={() => quacksState.refetch()}
       quackFormState={quackFormState}
       currentUser={user}

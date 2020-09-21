@@ -5,7 +5,9 @@ import { QuackForm, ReloadButton } from 'src/molecules/';
 import { QuackList, TopNavigation } from 'src/organisms/';
 
 export function HomeTemplate({
-  quacksState,
+  data,
+  loading,
+  error,
   refetchQuacks,
   quackFormState,
   currentUser,
@@ -18,18 +20,18 @@ export function HomeTemplate({
 
         {currentUser && <QuackForm {...quackFormState} />}
 
-        {quacksState.data && (
+        {data && (
           <ReloadButton
-            isLoading={quacksState.loading}
+            isLoading={loading}
             onClick={() => refetchQuacks()}
             className="fr"
           />
         )}
 
         <QuackList
-          quacks={quacksState.data && quacksState.data.quacks}
-          isLoading={quacksState.loading}
-          error={quacksState.error}
+          quacks={data && data.quacks}
+          isLoading={loading}
+          error={error}
           refetch={refetchQuacks}
         />
       </MainSection>
