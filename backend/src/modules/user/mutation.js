@@ -18,7 +18,7 @@ export const signin = async (_, { email, password }, { dbConnection }) => {
 
 export const signup = async (
   _,
-  { email, password, name, username, profileImageUrl },
+  { email, password, name, username, profileImageUrl = 'http://mrmrs.github.io/photos/p/1.jpg'},
   { dbConnection },
 ) => {
   const userByUsername = (
@@ -26,8 +26,6 @@ export const signup = async (
       username,
     ])
   )[0];
-
-  console.log('userByUsername', userByUsername);
 
   if (userByUsername) {
     throw new Error('Username already taken');
