@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv-flow';
 import express from 'express';
 import cors from 'cors';
 import { ApolloServer, gql } from 'apollo-server-express';
@@ -9,6 +9,8 @@ import rootResolver from './modules/rootResolver';
 import mockResolver from './__mocks__/mockResolver';
 
 dotenv.config();
+
+const MOCKS = process.env.MOCKS === 'true';
 
 const typeDefs = gql`
   type User {
@@ -63,10 +65,12 @@ const main = async () => {
 
   app.disable('x-powered-by');
   app.use(cors());
-  const dbConnection = await getConnection();
+
+  const dbConnection = MOCKS ? null : await getConnection();
+
   const apolloServer = new ApolloServer({
     typeDefs,
-    resolvers: process.env.MOCKS === 'true' ? mockResolver : rootResolver,
+    resolvers: MOCKS ? mockResolver : rootResolver,
     context: async ({ req, res }) => {
       const auth = req.headers.Authorization || '';
 
@@ -83,6 +87,8 @@ const main = async () => {
   apolloServer.applyMiddleware({ app, cors: false });
 
   const port = process.env.PORT || 4000;
+
+  app.get('/', (_, res) => res.redirect('/graphql'));
 
   app.listen(port, () => {
     console.info(`Server started at http://localhost:${port}/graphql`);
