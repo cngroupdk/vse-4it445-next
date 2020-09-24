@@ -57,24 +57,19 @@ export default {
         email,
       };
     },
-    addQuack: async (
-      _,
-      { userId, text }
-    ) => {
-
+    addQuack: async (_, { userId, text }) => {
       const id = quacks[quacks.length - 1].id + 1;
-    
+
       const quack = {
         id,
-        createdAt: (new Date).toISOString(),
+        createdAt: new Date().toISOString(),
         userId,
         text,
-      }
+      };
 
-      localQuacks.push(quack)
-    
-      return quack
-    }
-    
+      localQuacks.push(quack);
+
+      return quack;
+    },
   },
 };
