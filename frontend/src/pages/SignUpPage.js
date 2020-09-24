@@ -10,14 +10,12 @@ const SIGNUP_MUTATION = gql`
     $email: String!
     $name: String!
     $password: String!
-    $passwordConfirmation: String!
     $username: String!
   ) {
     signup(
       email: $email
       name: $name
       password: $password
-      passwordConfirmation: $passwordConfirmation
       username: $username
     ) {
       user {
@@ -39,7 +37,6 @@ export function SignUpPage() {
       auth.signin({ token, user });
       history.replace('/');
     },
-    onError: () => {},
   });
 
   const handleSignUpFormSubmit = useCallback(

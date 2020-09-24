@@ -51,7 +51,6 @@ const typeDefs = gql`
     signup(
       email: String!
       password: String!
-      passwordConfirmation: String
       name: String!
       username: String!
       profileImageUrl: String

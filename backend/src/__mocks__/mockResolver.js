@@ -3,40 +3,23 @@ import { users, quacks } from './mocks';
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 const MOCK_DATA_DELAY = 300;
-let localQuacks = quacks;
 
 export default {
   Query: {
     users: async () => {
       await sleep(MOCK_DATA_DELAY);
 
-      return users;
+      return users
     },
     user: async (_, { username }) => {
       await sleep(MOCK_DATA_DELAY);
 
-      const foundUser = users.find((user) => user.username === username);
-
-      if (!foundUser) {
-        return null;
-      }
-
-      return {
-        ...foundUser,
-        quacks: quacks
-          .filter((quack) => quack.userId === foundUser.id)
-          .map((quack) => ({
-            ...quack,
-            user: foundUser,
-          })),
-      };
+      return users.find((user) => user.username === username);
     },
     quacks: async () => {
       await sleep(MOCK_DATA_DELAY);
-      return localQuacks.map((quack) => ({
-        ...quack,
-        user: users.find((user) => quack.userId === user.id),
-      }));
+
+      return quacks;
     },
   },
   Mutation: {
@@ -53,9 +36,7 @@ export default {
     signup: async (_, { email }) => {
       await sleep(MOCK_DATA_DELAY);
 
-      return {
-        email,
-      };
+      return { email };
     },
     addQuack: async (_, { userId, text }) => {
       const id = quacks[quacks.length - 1].id + 1;
@@ -67,7 +48,7 @@ export default {
         text,
       };
 
-      localQuacks.push(quack);
+      quacks.splice(0, 0, quack);
 
       return quack;
     },

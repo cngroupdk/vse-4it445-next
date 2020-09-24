@@ -37,6 +37,14 @@ export const quacks = [
   },
 ];
 
+users.forEach(user => {
+  user.quacks = quacks.filter((quack) => quack.userId === user.id)
+})
+
+quacks.forEach(quack => {
+  quack.user = users.find(user => user.id === quack.userId)
+})
+
 export const mocks = {
   users,
   quacks,
