@@ -42,10 +42,44 @@ export default {
         token,
       };
     },
-    signup: async (_, { email }) => {
+    signup: async (_, { email, password, name, userName }) => {
       await sleep(MOCK_DATA_DELAY);
 
-      return { email };
+      if (
+        users.find(
+          (user) =>
+            user.userName.toLowerCase() === userName.trim().toLowerCase(),
+        )
+      ) {
+        throw Error('This username is already taken!');
+      }
+
+      if (
+        users.find(
+          (user) => user.email.toLowerCase() === email.trim().toLowerCase(),
+        )
+      ) {
+        throw Error('User with this email is already registered!');
+      }
+
+      const id = users.length + 1;
+      const dbUser = {
+        id,
+        name: name.trim(),
+        userName: userName.trim(),
+        email: email.trim(),
+        profileImageUrl: `https://eu.ui-avatars.com/api/?size=128&name=${encodeURIComponent(
+          name.trim(),
+        )}`,
+        quacks: [],
+      };
+
+      const user = getAuthUser(dbUser);
+      const token = createToken(user);
+
+      users.push(dbUser)
+
+      return { user, token };
     },
     addQuack: async (_, { userId, text }) => {
       await sleep(MOCK_DATA_DELAY);
@@ -55,6 +89,10 @@ export default {
       }
 
       const user = users.find((user) => user.id === userId);
+      if (!user) {
+         throw Error('User not found!')
+      }
+
       const quack = {
         id: quacks.length + 1,
         createdAt: new Date().toISOString(),
