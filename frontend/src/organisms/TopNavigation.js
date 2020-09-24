@@ -31,14 +31,14 @@ export function TopNavigation() {
         {user ? (
           <>
             <NavLink
-              to={route.userDetail(user.screenName)}
+              to={route.userDetail(user.userName)}
               noUnderline
               className="ph3 pv1 h-100 flex items-center"
             >
               <AvatarPhoto
                 className="v-mid dib mr2"
                 src={user.profileImageUrl}
-                alt={user.screenName}
+                alt={user.userName}
                 size={2}
               />{' '}
               {user.name}

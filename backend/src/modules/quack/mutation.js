@@ -1,10 +1,5 @@
-export const addQuack = async (
-  _,
-  { userId, text },
-  { dbConnection },
-) => {
-
-  const createdAt = (new Date).toISOString();
+export const addQuack = async (_, { userId, text }, { dbConnection }) => {
+  const createdAt = new Date().toISOString();
   const dbResponse = await dbConnection.query(
     `INSERT INTO quack (id, createdAt, userId, text) 
     VALUES (NULL, ?, ?, ?);`,
@@ -17,5 +12,5 @@ export const addQuack = async (
     ])
   )[0];
 
-  return quack
-}
+  return quack;
+};

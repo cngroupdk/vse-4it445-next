@@ -16,6 +16,7 @@ export function Button({
   as: Component = 'button',
   border = false,
   narrow = false,
+  disabled,
   ...rest
 }) {
   const colorClasses = COLORS[color] || DEFAULT_COLOR_CLASSES;
@@ -26,10 +27,12 @@ export function Button({
         'dib bg-animate pv2 br-pill',
         narrow ? 'ph3' : 'ph4',
         border ? 'ba' : 'bn',
+        { 'o-50': disabled },
         colorClasses,
         className,
       )}
       type="button"
+      disabled={disabled}
       {...rest}
     >
       {children}

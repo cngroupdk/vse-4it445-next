@@ -8,48 +8,49 @@ export const signin = async (_, { email, password }, { dbConnection }) => {
   );
   const user = dbResponse[0];
   if (await argon2.verify(user.password, password)) {
-
     const token = createToken({ id: user.id });
     return {
       user: { ...user },
       token,
     };
   }
-}
+};
 
 export const signup = async (
   _,
-  { email, password, name, username, profileImageUrl },
+  {
+    email,
+    password,
+    name,
+    userName,
+    profileImageUrl = 'http://mrmrs.github.io/photos/p/1.jpg',
+  },
   { dbConnection },
 ) => {
-  const userByUsername = (
-    await dbConnection.query(`SELECT * FROM user WHERE username = ?`, [
-      username,
+  const userByUserName = (
+    await dbConnection.query(`SELECT * FROM user WHERE userName = ?`, [
+      userName,
     ])
   )[0];
 
-  console.log('userByUsername', userByUsername)
-
-  if(userByUsername) {
-    throw new Error('UsernameAlreadyTaken');
+  if (userByUserName) {
+    throw new Error('Username already taken');
   }
 
   const userByEmail = (
-    await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [
-      email,
-    ])
+    await dbConnection.query(`SELECT * FROM user WHERE email = ?`, [email])
   )[0];
 
-  if(userByEmail) {
-    throw new Error('EmailAlreadyRegistered');
+  if (userByEmail) {
+    throw new Error('Email already registered');
   }
 
   const passwordHash = await argon2.hash(password);
 
   const dbResponse = await dbConnection.query(
-    `INSERT INTO user (id, email, password, name, username, profileImageUrl) 
+    `INSERT INTO user (id, email, password, name, userName, profileImageUrl) 
     VALUES (NULL, ?, ?, ?, ?, ?);`,
-    [email, passwordHash, name, username, profileImageUrl],
+    [email, passwordHash, name, userName, profileImageUrl],
   );
 
   const token = createToken({ id: dbResponse.insertId });
@@ -58,9 +59,9 @@ export const signup = async (
     id: dbResponse.insertId,
     email,
     name: name,
-    username: username,
+    userName: userName,
     profileImageUrl: profileImageUrl,
   };
 
   return { user: userObject, token: token };
-}
+};

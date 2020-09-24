@@ -1,17 +1,17 @@
 import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { gql, useQuery } from '@apollo/client';
+import { gql, useMutation, useQuery } from '@apollo/client';
 
 import { UserDetailTemplate } from 'src/templates/UserDetailTemplate';
 import { PageNotFound } from './PageNotFound';
 import { useAuth } from 'src/utils/auth';
 
 const USER_DETAIL_QUERY = gql`
-  query UserDetail($screenName: String!) {
-    user(screenName: $screenName) {
+  query UserDetail($userName: String!) {
+    user(userName: $userName) {
       id
       name
-      screenName
+      userName
       profileImageUrl
       quacks {
         id
@@ -20,7 +20,7 @@ const USER_DETAIL_QUERY = gql`
         user {
           id
           name
-          screenName
+          userName
           profileImageUrl
         }
       }
@@ -28,23 +28,42 @@ const USER_DETAIL_QUERY = gql`
   }
 `;
 
+const QUACK_MUTATION = gql`
+  mutation Quack($userId: Int!, $text: String!) {
+    addQuack(userId: $userId, text: $text) {
+      id
+    }
+  }
+`;
+
 export function UserDetailPage() {
   const { user } = useAuth();
-  const { screenName } = useParams();
+  const { userName } = useParams();
+
   const userFetcher = useQuery(USER_DETAIL_QUERY, {
-    variables: { screenName },
+    variables: { userName },
   });
 
   const [quackFormText, setQuackFormText] = useState('');
-  const submitQuack = ({ text }) => {
-    console.log('quack:', text);
-    setQuackFormText('');
-  };
+  const [quackMutationRequest, quackMutationRequestState] = useMutation(
+    QUACK_MUTATION,
+    {
+      onCompleted: () => {
+        setQuackFormText('');
+        userFetcher.refetch();
+      },
+      onError: () => {},
+    },
+  );
 
   const quackFormState = {
+    loading: quackMutationRequestState.loading,
+    error: quackMutationRequestState.error,
     text: quackFormText,
     setText: setQuackFormText,
-    onSubmit: submitQuack,
+    onSubmit: ({ text }) => {
+      quackMutationRequest({ variables: { text, userId: user.id } });
+    },
   };
 
   if (userFetcher.data && userFetcher.data.user === null) {
@@ -53,11 +72,13 @@ export function UserDetailPage() {
 
   return (
     <UserDetailTemplate
-      userFetcher={userFetcher}
+      data={userFetcher.data}
+      loading={userFetcher.loading}
+      error={userFetcher.error}
       onReload={() => userFetcher.refetch()}
       quackFormState={quackFormState}
       currentUser={user}
-      screenName={screenName}
+      userName={userName}
     />
   );
 }

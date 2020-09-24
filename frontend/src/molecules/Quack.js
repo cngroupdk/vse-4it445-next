@@ -1,17 +1,17 @@
 import React from 'react';
 
-import { AvatarPhoto, Link, UserName, UserScreenName } from 'src/atoms/';
+import { AvatarPhoto, Link, UserName, UserUserName } from 'src/atoms/';
 import { formatDate } from 'src/utils/date';
 import { route } from 'src/Routes';
 
 export function Quack({ quack }) {
   const {
-    user: { name, screenName, profileImageUrl },
+    user: { name, userName, profileImageUrl },
     text,
     createdAt,
   } = quack;
 
-  const linkToUser = route.userDetail(screenName);
+  const linkToUser = route.userDetail(userName);
 
   return (
     <article className="flex w-100 bb b--black-10 pb2 mt2">
@@ -23,7 +23,7 @@ export function Quack({ quack }) {
       <div className="pl3 flex-auto">
         <div className="pb2">
           <Link to={linkToUser} className="black-90">
-            <UserName name={name} /> <UserScreenName screenName={screenName} />
+            <UserName name={name} /> <UserUserName userName={userName} />
           </Link>
           {' - '}
           <span className="f6 fw4 black-60">{formatDate(createdAt)}</span>

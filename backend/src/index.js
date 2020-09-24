@@ -1,4 +1,4 @@
-import dotenv from 'dotenv';
+import dotenv from 'dotenv-flow';
 import express from 'express';
 import cors from 'cors';
 import { ApolloServer, gql } from 'apollo-server-express';
@@ -10,12 +10,13 @@ import mockResolver from './__mocks__/mockResolver';
 
 dotenv.config();
 
+const MOCKS = process.env.MOCKS === 'true';
+
 const typeDefs = gql`
   type User {
     id: Int!
-    email: String!
     name: String!
-    username: String!
+    userName: String!
     profileImageUrl: String
     quacks: [Quack!]!
   }
@@ -28,47 +29,53 @@ const typeDefs = gql`
     text: String!
   }
 
-  type SignIn {
-    user: User!
-    token: String!
+  type AuthUser {
+    id: Int!
+    name: String!
+    userName: String!
+    profileImageUrl: String
   }
 
-  type SignUp {
-    user: User!
+  type AuthInfo {
+    user: AuthUser!
     token: String!
   }
 
   type Query {
     users: [User!]!
-    user(username: String!): User
+    user(userName: String!): User
     quacks: [Quack!]!
   }
 
   type Mutation {
-    signin(email: String!, password: String!): SignIn!
+    signin(email: String!, password: String!): AuthInfo!
+
     signup(
       email: String!
       password: String!
       name: String!
-      username: String!
+      userName: String!
       profileImageUrl: String
-    ): SignUp!
+    ): AuthInfo!
+
     addQuack(userId: Int!, text: String!): Quack!
   }
 `;
 
 const main = async () => {
   const app = express();
-  
+
   app.disable('x-powered-by');
   app.use(cors());
-  const dbConnection = await getConnection();
+
+  const dbConnection = MOCKS ? null : await getConnection();
+
   const apolloServer = new ApolloServer({
     typeDefs,
-    resolvers: process.env.MOCKS === 'true' ? mockResolver : rootResolver,
+    resolvers: MOCKS ? mockResolver : rootResolver,
     context: async ({ req, res }) => {
       const auth = req.headers.Authorization || '';
-  
+
       return {
         req,
         res,
@@ -78,14 +85,16 @@ const main = async () => {
     },
     playground: true,
   });
-  
+
   apolloServer.applyMiddleware({ app, cors: false });
-  
+
   const port = process.env.PORT || 4000;
-  
+
+  app.get('/', (_, res) => res.redirect('/graphql'));
+
   app.listen(port, () => {
     console.info(`Server started at http://localhost:${port}/graphql`);
   });
-}
+};
 
 main();

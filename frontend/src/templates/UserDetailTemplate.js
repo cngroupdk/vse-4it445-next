@@ -12,15 +12,16 @@ import { QuackForm, ReloadButton } from 'src/molecules/';
 import { QuackList, TopNavigation } from 'src/organisms/';
 
 export function UserDetailTemplate({
-  screenName,
-  userFetcher,
+  userName,
+  data,
+  loading,
+  error,
   onReload,
   quackFormState,
   currentUser,
 }) {
-  const { data, loading, error } = userFetcher;
   const showQuackForm =
-    quackFormState && currentUser && currentUser.screenName === screenName;
+    quackFormState && currentUser && currentUser.userName === userName;
 
   return (
     <>
@@ -47,7 +48,7 @@ export function UserDetailTemplate({
               />
               <Heading size="lg">{data.user.name}</Heading>
               <Heading size="sm" className="fw4 gray">
-                @{data.user.screenName}
+                @{data.user.userName}
               </Heading>
             </header>
 
