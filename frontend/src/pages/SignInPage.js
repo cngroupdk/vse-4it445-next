@@ -27,6 +27,7 @@ export function SignInPage() {
       auth.signin({ token, user });
       history.replace('/');
     },
+    onError: () => {},
   });
 
   const handleSignInFormSubmit = useCallback(

@@ -37,6 +37,7 @@ export function SignUpPage() {
       auth.signin({ token, user });
       history.replace('/');
     },
+    onError: () => {},
   });
 
   const handleSignUpFormSubmit = useCallback(

@@ -77,7 +77,7 @@ export default {
       const user = getAuthUser(dbUser);
       const token = createToken(user);
 
-      users.push(dbUser)
+      users.push(dbUser);
 
       return { user, token };
     },
@@ -90,7 +90,7 @@ export default {
 
       const user = users.find((user) => user.id === userId);
       if (!user) {
-         throw Error('User not found!')
+        throw Error('User not found!');
       }
 
       const quack = {
