@@ -15,9 +15,8 @@ const MOCKS = process.env.MOCKS === 'true';
 const typeDefs = gql`
   type User {
     id: Int!
-    email: String!
     name: String!
-    username: String!
+    userName: String!
     profileImageUrl: String
     quacks: [Quack!]!
   }
@@ -30,31 +29,35 @@ const typeDefs = gql`
     text: String!
   }
 
-  type SignIn {
-    user: User!
-    token: String!
+  type AuthUser {
+    id: Int!
+    name: String!
+    userName: String!
+    profileImageUrl: String
   }
 
-  type SignUp {
-    user: User!
+  type AuthInfo {
+    user: AuthUser!
     token: String!
   }
 
   type Query {
     users: [User!]!
-    user(username: String!): User
+    user(userName: String!): User
     quacks: [Quack!]!
   }
 
   type Mutation {
-    signin(email: String!, password: String!): SignIn!
+    signin(email: String!, password: String!): AuthInfo!
+
     signup(
       email: String!
       password: String!
       name: String!
-      username: String!
+      userName: String!
       profileImageUrl: String
-    ): SignUp!
+    ): AuthInfo!
+
     addQuack(userId: Int!, text: String!): Quack!
   }
 `;

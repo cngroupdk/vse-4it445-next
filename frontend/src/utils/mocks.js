@@ -2,34 +2,34 @@ export const users = [
   {
     id: 1,
     name: 'Young Gatchell',
-    username: 'yg123',
+    userName: 'yg123',
     profileImageUrl: 'http://mrmrs.github.io/photos/p/1.jpg',
   },
   {
     id: 2,
     name: 'Gatchell Young ',
-    username: 'gyoung',
+    userName: 'gyoung',
     profileImageUrl: 'http://mrmrs.github.io/photos/p/2.jpg',
   },
 ];
 
 export const quacks = [
   {
-    id: 1,
+    id: 3,
     createdAt: '2019-08-08T05:43:18.023Z',
-    userId: 1,
+    userId: 2,
     text: 'Hello, People of the World!',
   },
   {
     id: 2,
     createdAt: '2019-08-06T14:10:51.023Z',
-    userId: 2,
+    userId: 1,
     text: 'Como setas?',
   },
   {
-    id: 3,
+    id: 1,
     createdAt: '2019-08-03T09:09:34.023Z',
-    userId: 1,
+    userId: 2,
     text:
       'Hello, People of the World! Hello, People of the World! Hello, People of the World! Hello, People of the World! Hello,\n\nWorld!',
   },

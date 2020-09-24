@@ -7,11 +7,11 @@ import { PageNotFound } from './PageNotFound';
 import { useAuth } from 'src/utils/auth';
 
 const USER_DETAIL_QUERY = gql`
-  query UserDetail($username: String!) {
-    user(username: $username) {
+  query UserDetail($userName: String!) {
+    user(userName: $userName) {
       id
       name
-      username
+      userName
       profileImageUrl
       quacks {
         id
@@ -20,7 +20,7 @@ const USER_DETAIL_QUERY = gql`
         user {
           id
           name
-          username
+          userName
           profileImageUrl
         }
       }
@@ -30,17 +30,19 @@ const USER_DETAIL_QUERY = gql`
 
 const QUACK_MUTATION = gql`
   mutation Quack($userId: Int!, $text: String!) {
-    addQuack(userId: $userId, text: $text)
+    addQuack(userId: $userId, text: $text) {
+      id
+    }
   }
 `;
 
 export function UserDetailPage() {
   const { user } = useAuth();
-  const { username } = useParams();
   const history = useHistory();
+  const { userName } = useParams();
 
   const userFetcher = useQuery(USER_DETAIL_QUERY, {
-    variables: { username },
+    variables: { userName },
   });
 
   const [quackMutationRequest, quackMutationRequestState] = useMutation(
@@ -76,7 +78,7 @@ export function UserDetailPage() {
       onReload={() => userFetcher.refetch()}
       quackFormState={quackFormState}
       currentUser={user}
-      username={username}
+      userName={userName}
     />
   );
 }

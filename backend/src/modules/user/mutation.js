@@ -22,14 +22,14 @@ export const signup = async (
     email,
     password,
     name,
-    username,
+    userName,
     profileImageUrl = 'http://mrmrs.github.io/photos/p/1.jpg',
   },
   { dbConnection },
 ) => {
   const userByUsername = (
-    await dbConnection.query(`SELECT * FROM user WHERE username = ?`, [
-      username,
+    await dbConnection.query(`SELECT * FROM user WHERE userName = ?`, [
+      userName,
     ])
   )[0];
 
@@ -48,9 +48,9 @@ export const signup = async (
   const passwordHash = await argon2.hash(password);
 
   const dbResponse = await dbConnection.query(
-    `INSERT INTO user (id, email, password, name, username, profileImageUrl) 
+    `INSERT INTO user (id, email, password, name, userName, profileImageUrl) 
     VALUES (NULL, ?, ?, ?, ?, ?);`,
-    [email, passwordHash, name, username, profileImageUrl],
+    [email, passwordHash, name, userName, profileImageUrl],
   );
 
   const token = createToken({ id: dbResponse.insertId });
@@ -59,7 +59,7 @@ export const signup = async (
     id: dbResponse.insertId,
     email,
     name: name,
-    username: username,
+    userName: userName,
     profileImageUrl: profileImageUrl,
   };
 

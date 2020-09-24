@@ -6,12 +6,12 @@ import { route } from 'src/Routes';
 
 export function Quack({ quack }) {
   const {
-    user: { name, username, profileImageUrl },
+    user: { name, userName, profileImageUrl },
     text,
     createdAt,
   } = quack;
 
-  const linkToUser = route.userDetail(username);
+  const linkToUser = route.userDetail(userName);
 
   return (
     <article className="flex w-100 bb b--black-10 pb2 mt2">
@@ -23,7 +23,7 @@ export function Quack({ quack }) {
       <div className="pl3 flex-auto">
         <div className="pb2">
           <Link to={linkToUser} className="black-90">
-            <UserName name={name} /> <UserUsername username={username} />
+            <UserName name={name} /> <UserUsername userName={userName} />
           </Link>
           {' - '}
           <span className="f6 fw4 black-60">{formatDate(createdAt)}</span>

@@ -13,7 +13,7 @@ export const route = {
   about: () => `/about`,
   signIn: () => `/auth/signin`,
   signUp: () => `/auth/signup`,
-  userDetail: (username) => `/${username}`,
+  userDetail: (userName) => `/${userName}`,
 };
 
 export function Routes() {
@@ -24,7 +24,7 @@ export function Routes() {
       <Route path={route.signIn()} exact component={SignInPage} />
       <Route path={route.signUp()} exact component={SignUpPage} />
       <Route
-        path={route.userDetail(':username')}
+        path={route.userDetail(':userName')}
         exact
         component={UserDetailPage}
       />

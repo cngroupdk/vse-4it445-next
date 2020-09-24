@@ -12,7 +12,7 @@ const initialValues = {
   name: '',
   password: '',
   passwordConfirmation: '',
-  username: '',
+  userName: '',
 };
 
 const schema = yup.object().shape({
@@ -24,7 +24,7 @@ const schema = yup.object().shape({
     .required()
     .oneOf([yup.ref('password'), null], 'Passwords must match')
     .label('Password Confirmation'),
-  username: yup.string().required().label('Username'),
+  userName: yup.string().required().label('Username'),
 });
 
 export function SignUpForm({
@@ -54,8 +54,8 @@ export function SignUpForm({
           autoCapitalize="off"
         />
         <FormikField
-          id="username"
-          name="username"
+          id="userName"
+          name="userName"
           label="Username"
           type="text"
           autoComplete="on"

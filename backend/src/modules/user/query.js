@@ -3,10 +3,10 @@ export const users = async (_, __, { dbConnection }) => {
   return users;
 };
 
-export const user = async (_, { username }, { dbConnection }) => {
+export const user = async (_, { userName }, { dbConnection }) => {
   const user = (
-    await dbConnection.query(`SELECT * FROM user WHERE username = ?`, [
-      username,
+    await dbConnection.query(`SELECT * FROM user WHERE userName = ?`, [
+      userName,
     ])
   )[0];
   if (!user) {

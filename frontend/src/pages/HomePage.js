@@ -13,7 +13,7 @@ const QUACKS_QUERY = gql`
       user {
         id
         name
-        username
+        userName
         profileImageUrl
       }
       text
@@ -23,7 +23,9 @@ const QUACKS_QUERY = gql`
 
 const QUACK_MUTATION = gql`
   mutation Quack($userId: Int!, $text: String!) {
-    addQuack(userId: $userId, text: $text)
+    addQuack(userId: $userId, text: $text) {
+      id
+    }
   }
 `;
 

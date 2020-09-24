@@ -10,18 +10,18 @@ const SIGNUP_MUTATION = gql`
     $email: String!
     $name: String!
     $password: String!
-    $username: String!
+    $userName: String!
   ) {
     signup(
       email: $email
       name: $name
       password: $password
-      username: $username
+      userName: $userName
     ) {
       user {
         id
         name
-        username
+        userName
         profileImageUrl
       }
       token
