@@ -1,9 +1,12 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import { Button, TextArea } from 'src/atoms/';
+import { ErrorMessage, TextArea } from 'src/atoms/';
+import { LoadingButton } from 'src/molecules/';
 
 export function QuackForm({
+  error,
+  loading,
   text,
   setText,
   onSubmit,
@@ -18,22 +21,22 @@ export function QuackForm({
       className={classNames('pv2 black-90 bb b--black-10 cf', className)}
       onSubmit={(e) => {
         e.preventDefault();
-        if (!onSubmit) return;
-        onSubmit({ text });
+        onSubmit && onSubmit({ text });
       }}
     >
       <div>
         <TextArea
           value={text}
           onChange={(e) => {
-            if (!setText) return;
-            setText(e.target.value);
+            setText && setText(e.target.value);
           }}
           name="comment"
           className="pa2 h3 mb2"
           placeholder="Quack somethig..."
+          disabled={loading}
         />
       </div>
+      {error && <ErrorMessage>{`${error}`}</ErrorMessage>}
       <div className="fr">
         <span
           className={classNames('f6 mr3', {
@@ -43,9 +46,9 @@ export function QuackForm({
         >
           {length}/{maxLength}
         </span>
-        <Button className="f5" type="submit">
+        <LoadingButton className="f5" type="submit" loading={loading}>
           Quack
-        </Button>
+        </LoadingButton>
       </div>
     </form>
   );

@@ -1,11 +1,9 @@
 import React from 'react';
 import { Form, Formik } from 'formik';
 import * as yup from 'yup';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFeatherAlt } from '@fortawesome/free-solid-svg-icons';
 
-import { Button, ErrorBanner } from 'src/atoms/';
-import { FormikField } from 'src/molecules/';
+import { ErrorBanner } from 'src/atoms/';
+import { FormikField, LoadingButton } from 'src/molecules/';
 
 const initialValues = {
   email: '',
@@ -90,12 +88,9 @@ export function SignUpForm({
           autoCorrect="off"
           autoCapitalize="off"
         />
-        <Button type="submit" className="mt2 mb3">
+        <LoadingButton type="submit" className="mt2 mb3" loading={isLoading}>
           Sign Up
-          {isLoading && (
-            <FontAwesomeIcon className="ml3" icon={faFeatherAlt} spin />
-          )}
-        </Button>
+        </LoadingButton>
         {children}
       </Form>
     </Formik>

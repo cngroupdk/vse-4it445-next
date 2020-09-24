@@ -9,6 +9,7 @@ export { Loading } from './Loading';
 export { MainSection } from './MainSection';
 export { NavLink } from './NavLink';
 export { ScrollToTop } from './ScrollToTop';
+export { Spinner } from './Spinner';
 export { TextArea } from './TextArea';
 export { TextInput } from './TextInput';
 export { TransparentButton } from './TransparentButton';

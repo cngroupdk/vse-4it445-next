@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { gql, useMutation, useQuery } from '@apollo/client';
 
 import { UserDetailTemplate } from 'src/templates/UserDetailTemplate';
@@ -38,32 +38,32 @@ const QUACK_MUTATION = gql`
 
 export function UserDetailPage() {
   const { user } = useAuth();
-  const history = useHistory();
   const { userName } = useParams();
 
   const userFetcher = useQuery(USER_DETAIL_QUERY, {
     variables: { userName },
   });
 
+  const [quackFormText, setQuackFormText] = useState('');
   const [quackMutationRequest, quackMutationRequestState] = useMutation(
     QUACK_MUTATION,
     {
       onCompleted: () => {
-        history.go(0);
+        setQuackFormText('');
+        userFetcher.refetch();
       },
+      onError: () => {},
     },
   );
 
-  const [quackFormText, setQuackFormText] = useState('');
-  const submitQuack = ({ text }) => {
-    setQuackFormText('');
-    quackMutationRequest({ variables: { text, userId: user.id } });
-  };
-
   const quackFormState = {
+    loading: quackMutationRequestState.loading,
+    error: quackMutationRequestState.error,
     text: quackFormText,
     setText: setQuackFormText,
-    onSubmit: submitQuack,
+    onSubmit: ({ text }) => {
+      quackMutationRequest({ variables: { text, userId: user.id } });
+    },
   };
 
   if (userFetcher.data && userFetcher.data.user === null) {
@@ -73,8 +73,8 @@ export function UserDetailPage() {
   return (
     <UserDetailTemplate
       data={userFetcher.data}
-      loading={userFetcher.loading || quackMutationRequestState.loading}
-      error={userFetcher.error || quackMutationRequestState.error}
+      loading={userFetcher.loading}
+      error={userFetcher.error}
       onReload={() => userFetcher.refetch()}
       quackFormState={quackFormState}
       currentUser={user}
