@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { AvatarPhoto, Link, UserName, UserUsername } from 'src/atoms/';
+import { AvatarPhoto, Link, UserName, UserUserName } from 'src/atoms/';
 import { formatDate } from 'src/utils/date';
 import { route } from 'src/Routes';
 
@@ -23,7 +23,7 @@ export function Quack({ quack }) {
       <div className="pl3 flex-auto">
         <div className="pb2">
           <Link to={linkToUser} className="black-90">
-            <UserName name={name} /> <UserUsername userName={userName} />
+            <UserName name={name} /> <UserUserName userName={userName} />
           </Link>
           {' - '}
           <span className="f6 fw4 black-60">{formatDate(createdAt)}</span>

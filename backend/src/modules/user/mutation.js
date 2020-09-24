@@ -27,13 +27,13 @@ export const signup = async (
   },
   { dbConnection },
 ) => {
-  const userByUsername = (
+  const userByUserName = (
     await dbConnection.query(`SELECT * FROM user WHERE userName = ?`, [
       userName,
     ])
   )[0];
 
-  if (userByUsername) {
+  if (userByUserName) {
     throw new Error('Username already taken');
   }
 
