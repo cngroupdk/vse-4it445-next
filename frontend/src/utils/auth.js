@@ -6,17 +6,15 @@ import React, {
   useState,
 } from 'react';
 
-const LOCAL_STORAGE_AUTH_KEY = 'quacker-auth';
+const LOCAL_STORAGE_AUTH_KEY = 'app-auth';
 
 const initialState = {
   token: null,
-  user: null,
 };
 
 const AuthContext = createContext(
   createContextValue({
     token: initialState.token,
-    user: initialState.user,
     setState: () =>
       console.error('You are using AuthContext without AuthProvider!'),
   }),
@@ -30,8 +28,8 @@ export function AuthProvider({ children }) {
   const [state, setState] = usePersistedAuth(initialState);
 
   const contextValue = useMemo(() => {
-    const { token, user } = state;
-    return createContextValue({ token, user, setState });
+    const { token } = state;
+    return createContextValue({ token, setState });
   }, [state, setState]);
 
   return (
@@ -39,12 +37,11 @@ export function AuthProvider({ children }) {
   );
 }
 
-function createContextValue({ token, user, setState }) {
+function createContextValue({ token, setState }) {
   return {
     token,
-    user,
-    signin: ({ token, user }) => setState({ token, user }),
-    signout: () => setState({ token: null, user: null }),
+    signin: ({ token }) => setState({ token }),
+    signout: () => setState({ token: null }),
   };
 }
 
@@ -70,10 +67,10 @@ function getStorageState(defaultState) {
   }
 
   try {
-    const { user, token } = JSON.parse(rawData);
+    const { token } = JSON.parse(rawData);
 
-    if (token && user && user.userName && user.id && user.name) {
-      return { token, user };
+    if (token) {
+      return { token };
     }
   } catch {}
 

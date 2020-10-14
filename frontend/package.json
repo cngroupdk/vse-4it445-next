@@ -25,7 +25,6 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "5.2.0",
     "react-scripts": "3.4.3",
-    "tachyons": "4.12.0",
     "yup": "0.29.3"
   },
   "eslintConfig": {
@@ -44,6 +43,6 @@
     ]
   },
   "engines": {
-    "node": "14.5.0"
+    "node": "^14.14.0"
   }
 }
