@@ -1,12 +1,10 @@
 import React from 'react';
 
-import { Link } from 'src/atoms';
-import { route } from 'src/Routes';
-
 export function PageNotFound() {
   return (
-    <p>
-      Page not found, please return to <Link to={route.home()}>Home</Link>.
-    </p>
+    <div className="appWrapper">
+      <h1>Error 404:</h1>
+      <p>Page not found</p>
+    </div>
   );
 }
