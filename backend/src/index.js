@@ -29,12 +29,15 @@ const main = async () => {
   app.disable('x-powered-by');
   app.use(cors());
 
-  const dbConnection = await getConnection();
+  let dbConnection = null;
 
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers: rootResolver,
     context: async ({ req, res }) => {
+      if (!dbConnection) {
+        dbConnection = await getConnection();
+      }
       const auth = req.headers.Authorization || '';
 
       return {
